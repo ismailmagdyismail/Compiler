@@ -1,2 +1,6 @@
-#include "./tokens/tests/tokens.test.hpp"
-int main() { TokensTest::run(); }
+#include "./tokens/tests/Token.test.hpp"
+#include "lexer/tests/lexer.test.hpp"
+int main() {
+  TokenTest::run();
+  LexerTest::run();
+}

@@ -5,7 +5,8 @@
 #include <iostream>
 
 void testTokensCreation() {
-  std::cout << "tokens creation testing  ...\n";
+  std::cout << "-----------------------------------------------\n";
+  std::cout << ">>> tokens creation testing  ...\n";
   assert(TokenFactory::createToken("=").tokenType == TokenType::ASSIGN);
   assert(TokenFactory::createToken("let").tokenType == TokenType::LET);
   assert(TokenFactory::createToken("fn").tokenType == TokenType::FUNCTION);
@@ -18,7 +19,7 @@ void testTokensCreation() {
   assert(TokenFactory::createToken(",").tokenType == TokenType::COMMA);
   assert(TokenFactory::createToken(";").tokenType == TokenType::SEMI_COLON);
   assert(TokenFactory::createToken("!!").tokenType == TokenType::ILLEGAL);
-  std::cout << "tokens created sucessfully , test passed ...\n";
+  std::cout << ">>> tokens created sucessfully , test passed ...\n";
 }
 
 void TokenTest::run() { testTokensCreation(); }
