@@ -4,8 +4,22 @@
 #include <string>
 
 bool isValidIdenfier(std::string identifier) {
+  if (identifier.empty()) {
+    return false;
+  }
+  if (!isalpha(identifier[0])) {
+    return false;
+  }
   for (int i = 0; i < identifier.size(); i++) {
     if (!isalnum(identifier[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+bool isValidInteger(std::string number) {
+  for (int i = 0; i < number.size(); i++) {
+    if (!isdigit(number[i])) {
       return false;
     }
   }
@@ -38,6 +52,9 @@ Token TokenActions::createToken(std::string code) {
     tokenType = TokenType::LET;
   } else if (code == "-1" || code == "eof" || code == "") {
     tokenType = TokenType::END_OF_FILE;
+  } else if (isValidInteger(code)) {
+    tokenType = TokenType::INT;
+    literal = code;
   } else if (isValidIdenfier(code)) {
     tokenType = TokenType::IDENTIFIER;
   }

@@ -18,6 +18,8 @@ void testTokensCreation() {
   assert(TokenActions::createToken(",").tokenType == TokenType::COMMA);
   assert(TokenActions::createToken(";").tokenType == TokenType::SEMI_COLON);
   assert(TokenActions::createToken("!!").tokenType == TokenType::ILLEGAL);
+  assert(TokenActions::createToken("5").tokenType == TokenType::INT);
+  assert(TokenActions::createToken("10").tokenType == TokenType::INT);
   assert(TokenActions::createToken("").tokenType == TokenType::END_OF_FILE);
   assert(TokenActions::createToken("-1").tokenType == TokenType::END_OF_FILE);
   assert(TokenActions::createToken("eof").tokenType == TokenType::END_OF_FILE);
