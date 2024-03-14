@@ -35,4 +35,9 @@ struct Token {
   std::string literalValue;
 };
 
+namespace TokenActions {
+Token createToken(std::string code);
+bool isValidKeyword(std::string code);
+} // namespace TokenActions
+
 #endif
