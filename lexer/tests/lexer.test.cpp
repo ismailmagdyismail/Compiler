@@ -55,5 +55,6 @@ void testKeyWordsAndILLEGALs() {
   assert(lexer.nextToken().tokenType == TokenType::IDENTIFIER);
   assert(lexer.nextToken().tokenType == TokenType::RIGHT_BRACE);
   assert(lexer.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer.nextToken().tokenType == TokenType::END_OF_FILE);
   std::cout << ">>> Lexer anaylisis done sucessfully , test passed ...\n";
 }
