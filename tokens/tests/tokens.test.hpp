@@ -1,0 +1,3 @@
+namespace TokensTests {
+void testTokensCreation();
+}
