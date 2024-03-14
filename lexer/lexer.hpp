@@ -1,7 +1,7 @@
 #ifndef __LEXER_H
 #define __LEXER_H
 
-#include "../tokens/token.hpp"
+#include "../tokens/Token.hpp"
 #include <string>
 
 /**
@@ -12,12 +12,13 @@ error messages (linenumber,filename,etc...)
 
 class Lexer {
 public:
-  Token nextToken();
   Lexer(std::string sourceCode);
+  Token nextToken();
 
 private:
   int currentIndex;
   std::string sourceCode;
+  bool hasNext();
 };
 
 #endif
