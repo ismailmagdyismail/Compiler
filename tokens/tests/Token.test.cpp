@@ -29,20 +29,20 @@ void testTokensCreation() {
 void testTokensTypes() {
   std::cout << "-----------------------------------------------\n";
   std::cout << ">>> tokens types testing  ...\n";
-  assert(TokenActions::isValidKeyword("=") == true);
-  assert(TokenActions::isValidKeyword("let") == true);
-  assert(TokenActions::isValidKeyword("fn") == true);
-  assert(TokenActions::isValidKeyword("(") == true);
-  assert(TokenActions::isValidKeyword(")") == true);
-  assert(TokenActions::isValidKeyword("+") == true);
-  assert(TokenActions::isValidKeyword("{") == true);
-  assert(TokenActions::isValidKeyword("}") == true);
-  assert(TokenActions::isValidKeyword(",") == true);
-  assert(TokenActions::isValidKeyword(";") == true);
-  assert(TokenActions::isValidKeyword("!") == false);
-  assert(TokenActions::isValidKeyword("five") == false);
-  assert(TokenActions::isValidKeyword("10") == false);
-  assert(TokenActions::isValidKeyword("5") == false);
+  assert(TokenActions::isValidKeyword("="));
+  assert(TokenActions::isValidKeyword("let"));
+  assert(TokenActions::isValidKeyword("fn"));
+  assert(TokenActions::isValidKeyword("("));
+  assert(TokenActions::isValidKeyword(")"));
+  assert(TokenActions::isValidKeyword("+"));
+  assert(TokenActions::isValidKeyword("{"));
+  assert(TokenActions::isValidKeyword("}"));
+  assert(TokenActions::isValidKeyword(","));
+  assert(TokenActions::isValidKeyword(";"));
+  assert(!TokenActions::isValidKeyword("!"));
+  assert(!TokenActions::isValidKeyword("five"));
+  assert(!TokenActions::isValidKeyword("10"));
+  assert(!TokenActions::isValidKeyword("5"));
   std::cout << ">>> tokens types tested sucessfully , test passed ...\n";
 }
 
