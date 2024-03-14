@@ -1,10 +1,10 @@
-#include "./tokens.test.hpp"
+#include "tokens.test.hpp"
 #include "../token.hpp"
 #include "./../tokenFactory.hpp"
 #include <cassert>
 #include <iostream>
 
-void TokensTests::testTokensCreation() {
+void testTokensCreation() {
   std::cout << "tokens creation testing  ...\n";
   assert(TokenFactory::createToken("=").tokenType == TokenType::ASSIGN);
   assert(TokenFactory::createToken("let").tokenType == TokenType::LET);
@@ -20,3 +20,5 @@ void TokensTests::testTokensCreation() {
   assert(TokenFactory::createToken("!!").tokenType == TokenType::ILLEGAL);
   std::cout << "tokens created sucessfully , test passed ...\n";
 }
+
+void TokensTest::run() { testTokensCreation(); }

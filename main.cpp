@@ -1,2 +1,2 @@
 #include "./tokens/tests/tokens.test.hpp"
-int main() { TokensTests::testTokensCreation(); }
+int main() { TokensTest::run(); }
