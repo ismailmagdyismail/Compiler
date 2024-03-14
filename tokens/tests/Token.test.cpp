@@ -1,6 +1,6 @@
-#include "tokens.test.hpp"
 #include "../token.hpp"
 #include "./../tokenFactory.hpp"
+#include "./Token.test.hpp"
 #include <cassert>
 #include <iostream>
 
@@ -21,4 +21,4 @@ void testTokensCreation() {
   std::cout << "tokens created sucessfully , test passed ...\n";
 }
 
-void TokensTest::run() { testTokensCreation(); }
+void TokenTest::run() { testTokensCreation(); }
