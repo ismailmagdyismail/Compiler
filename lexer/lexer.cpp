@@ -2,8 +2,10 @@
 #include "../tokens/Token.hpp"
 #include <string>
 
+std::string filterSourceCode(std::string);
+
 Lexer::Lexer(std::string sourceCode) {
-  this->sourceCode = sourceCode;
+  this->sourceCode = filterSourceCode(sourceCode);
   this->currentIndex = 0;
 }
 
@@ -56,4 +58,26 @@ Token Lexer::nextToken() {
 
 std::string Lexer::getNextChar() {
   return std::string(1, this->sourceCode[this->currentIndex]);
+}
+
+std::string filterSourceCode(std::string sourceCode) {
+  int start = sourceCode.size();
+  for (int i = 0; i < sourceCode.size(); i++) {
+    if (sourceCode[i] != ' ' && sourceCode[i] != '\n') {
+      start = i;
+      break;
+    }
+  }
+  int end = 0;
+  for (int i = sourceCode.size() - 1; i >= 0; i--) {
+    if (sourceCode[i] != ' ' || sourceCode[i] != '\n') {
+      end = i;
+      break;
+    }
+  }
+  std::string filteredCode;
+  for (int i = start; i <= end; i++) {
+    filteredCode += sourceCode[i];
+  }
+  return filteredCode;
 }

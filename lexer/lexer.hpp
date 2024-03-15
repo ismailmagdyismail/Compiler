@@ -14,11 +14,11 @@ class Lexer {
 public:
   Lexer(std::string sourceCode);
   Token nextToken();
+  bool hasNext();
 
 private:
   int currentIndex;
   std::string sourceCode;
-  bool hasNext();
   std::string getNextChar();
 };
 

@@ -332,8 +332,17 @@ void tesingMuiltpleCharactersKeyWords() {
   assert(lexer3.nextToken().tokenType == TokenType::INT);
   assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
   assert(lexer3.nextToken().tokenType == TokenType::END_OF_FILE);
-
   std::cout << ">>> Lexer anaylisis done sucessfully , test passed ...\n";
+}
+
+void testReading() {
+  std::cout << "Enter code to Run lexical anaylsis on:";
+  std::string inputCode;
+  std::getline(std::cin, inputCode);
+  Lexer lexer(inputCode);
+  while (lexer.hasNext()) {
+    std::cout << lexer.nextToken().literalValue << '\n';
+  }
 }
 void LexerTest::run() {
   testOnlyKeyWords();
@@ -343,4 +352,5 @@ void LexerTest::run() {
   testSpaces();
   testingNoSpacesBetweenKeywords();
   tesingMuiltpleCharactersKeyWords();
+  // testReading();
 }
