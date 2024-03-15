@@ -55,6 +55,16 @@ void testSpaces() {
   assert(lexer3.nextToken().tokenType == TokenType::LEFT_BRACE);
   assert(lexer3.nextToken().tokenType == TokenType::RIGHT_BRACE);
 
+  code = "let a=b;";
+  std::cout << "testing " << code << '\n';
+  Lexer lexer4(code);
+  assert(lexer4.nextToken().tokenType == TokenType::LET);
+  assert(lexer4.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer4.nextToken().tokenType == TokenType::ASSIGN);
+  assert(lexer4.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer4.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer4.nextToken().tokenType == TokenType::END_OF_FILE);
+
   std::cout << ">>> Lexer anaylisis done sucessfully , test passed ...\n";
 }
 void testKeyWordsAndIdentifiers() {
