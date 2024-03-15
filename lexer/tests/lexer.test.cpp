@@ -19,7 +19,44 @@ void testOnlyKeyWords() {
   assert(lexer.nextToken().tokenType == TokenType::END_OF_FILE);
   std::cout << ">>> Lexer anaylisis done sucessfully , test passed ...\n";
 }
+void testSpaces() {
+  std::cout << "\n-----------------------------------------------\n";
+  std::cout << ">>> Lexer anaylisis tesing, testing spacing .....\n";
 
+  std::string code = "let a = b;";
+  std::cout << "testing " << code << '\n';
+  Lexer lexer1(code);
+  assert(lexer1.nextToken().tokenType == TokenType::LET);
+  assert(lexer1.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer1.nextToken().tokenType == TokenType::ASSIGN);
+  assert(lexer1.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer1.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer1.nextToken().tokenType == TokenType::END_OF_FILE);
+
+  code = "let a + b ;";
+  std::cout << "testing " << code << '\n';
+  Lexer lexer2(code);
+  assert(lexer2.nextToken().tokenType == TokenType::LET);
+  assert(lexer2.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer2.nextToken().tokenType == TokenType::PLUS);
+  assert(lexer2.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer2.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer2.nextToken().tokenType == TokenType::END_OF_FILE);
+
+  code = "fn(a,b){}";
+  std::cout << "testing " << code << '\n';
+  Lexer lexer3(code);
+  assert(lexer3.nextToken().tokenType == TokenType::FUNCTION);
+  assert(lexer3.nextToken().tokenType == TokenType::LEFT_PARENTHESES);
+  assert(lexer3.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer3.nextToken().tokenType == TokenType::COMMA);
+  assert(lexer3.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer3.nextToken().tokenType == TokenType::RIGHT_PARENTHESES);
+  assert(lexer3.nextToken().tokenType == TokenType::LEFT_BRACE);
+  assert(lexer3.nextToken().tokenType == TokenType::RIGHT_BRACE);
+
+  std::cout << ">>> Lexer anaylisis done sucessfully , test passed ...\n";
+}
 void testKeyWordsAndIdentifiers() {
   std::string code =
       "let five = 5;\nlet ten = 10;\n\nlet add = fn(x, y) {\n x + y\n};";
@@ -28,7 +65,6 @@ void testKeyWordsAndIdentifiers() {
       << ">>> Lexer anaylisis tesing, testing keyWords and Identifiers...\n";
   std::cout << "testing " << code << '\n';
   Lexer lexer(code);
-
   assert(lexer.nextToken().tokenType == TokenType::LET);
   assert(lexer.nextToken().tokenType == TokenType::IDENTIFIER);
   assert(lexer.nextToken().tokenType == TokenType::ASSIGN);
@@ -87,4 +123,5 @@ void LexerTest::run() {
   testKeyWordsAndIdentifiers();
   testValidIdentifiers();
   testInvalidIdentifiers();
+  testSpaces();
 }
