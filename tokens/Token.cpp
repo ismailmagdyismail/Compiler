@@ -15,7 +15,21 @@ std::unordered_map<std::string, Token> keywords{
     {"+", {TokenType::PLUS, "+"}},
     {"fn", {TokenType::FUNCTION, "fn"}},
     {"let", {TokenType::LET, "let"}},
-    {"", {TokenType::END_OF_FILE, ""}}};
+    {"", {TokenType::END_OF_FILE, ""}},
+    {"if", {TokenType::IF, "if"}},
+    {"else", {TokenType::ELSE, "else"}},
+    {"return", {TokenType::RETURN, "return"}},
+    {"true", {TokenType::TRUE, "true"}},
+    {"false", {TokenType::FALSE, "false"}},
+    {"*", {TokenType::ASTERISK, "*"}},
+    {"!", {TokenType::BANG, "!"}},
+    {"<", {TokenType::LT, "<"}},
+    {">", {TokenType::GT, ">"}},
+    {"/", {TokenType::SLASH, "/"}},
+    {"-", {TokenType::MINUS, "-"}},
+    {"==", {TokenType::EQUAL, "=="}},
+    {"!=", {TokenType::NOT_EQUAL, "!="}},
+};
 
 bool TokenActions::isValidKeyword(std::string code) {
   return keywords.find(code) != keywords.end();

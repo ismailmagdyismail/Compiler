@@ -17,10 +17,21 @@ void testTokensCreation() {
   assert(TokenActions::createToken("}").tokenType == TokenType::RIGHT_BRACE);
   assert(TokenActions::createToken(",").tokenType == TokenType::COMMA);
   assert(TokenActions::createToken(";").tokenType == TokenType::SEMI_COLON);
-  assert(TokenActions::createToken("!!").tokenType == TokenType::ILLEGAL);
-  assert(TokenActions::createToken("5").tokenType == TokenType::INT);
+  assert(TokenActions::createToken("!").tokenType == TokenType::BANG);
+  assert(TokenActions::createToken("if").tokenType == TokenType::IF);
+  assert(TokenActions::createToken("else").tokenType == TokenType::ELSE);
+  assert(TokenActions::createToken("true").tokenType == TokenType::TRUE);
+  assert(TokenActions::createToken("false").tokenType == TokenType::FALSE);
+  assert(TokenActions::createToken("return").tokenType == TokenType::RETURN);
+  assert(TokenActions::createToken("*").tokenType == TokenType::ASTERISK);
+  assert(TokenActions::createToken("/").tokenType == TokenType::SLASH);
+  assert(TokenActions::createToken(">").tokenType == TokenType::GT);
+  assert(TokenActions::createToken("<").tokenType == TokenType::LT);
   assert(TokenActions::createToken("10").tokenType == TokenType::INT);
   assert(TokenActions::createToken("").tokenType == TokenType::END_OF_FILE);
+  assert(TokenActions::createToken("==").tokenType == TokenType::EQUAL);
+  assert(TokenActions::createToken("!=").tokenType == TokenType::NOT_EQUAL);
+
   std::cout << ">>> tokens created sucessfully , test passed ...\n";
 }
 
@@ -37,10 +48,13 @@ void testTokensTypes() {
   assert(TokenActions::isValidKeyword("}"));
   assert(TokenActions::isValidKeyword(","));
   assert(TokenActions::isValidKeyword(";"));
-  assert(!TokenActions::isValidKeyword("!"));
+  assert(TokenActions::isValidKeyword("!"));
   assert(!TokenActions::isValidKeyword("five"));
   assert(!TokenActions::isValidKeyword("10"));
   assert(!TokenActions::isValidKeyword("5"));
+  assert(TokenActions::isValidKeyword("=="));
+  assert(TokenActions::isValidKeyword("!="));
+
   std::cout << ">>> tokens types tested sucessfully , test passed ...\n";
 }
 

@@ -11,6 +11,13 @@ enum class TokenType {
   // Keywords
   LET,
   FUNCTION,
+  IF,
+  ELSE,
+  RETURN,
+  TRUE,
+  FALSE,
+  EQUAL,
+  NOT_EQUAL,
 
   // Identfiers & literals
   IDENTIFIER,
@@ -19,6 +26,12 @@ enum class TokenType {
   // Operators
   ASSIGN,
   PLUS,
+  MINUS,
+  ASTERISK,
+  BANG,
+  SLASH,
+  LT,
+  GT,
 
   // Delimters
   COMMA,

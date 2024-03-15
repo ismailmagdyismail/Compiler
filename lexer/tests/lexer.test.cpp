@@ -147,15 +147,15 @@ void testInvalidIdentifiers() {
   std::cout << "Testing " << code << '\n';
   Lexer lexer(code);
   assert(lexer.nextToken().tokenType == TokenType::IDENTIFIER);
-  assert(lexer.nextToken().tokenType == TokenType::ILLEGAL);
+  assert(lexer.nextToken().tokenType == TokenType::BANG);
   assert(lexer.nextToken().tokenType == TokenType::END_OF_FILE);
 
   code = "five!!";
   std::cout << "Testing " << code << '\n';
   Lexer lexer2(code);
   assert(lexer2.nextToken().tokenType == TokenType::IDENTIFIER);
-  assert(lexer2.nextToken().tokenType == TokenType::ILLEGAL);
-  assert(lexer2.nextToken().tokenType == TokenType::ILLEGAL);
+  assert(lexer2.nextToken().tokenType == TokenType::BANG);
+  assert(lexer2.nextToken().tokenType == TokenType::BANG);
   assert(lexer2.nextToken().tokenType == TokenType::END_OF_FILE);
 
   code = "5five;five"; /// TODO make this case invalid
@@ -185,6 +185,122 @@ void testingNoSpacesBetweenKeywords() {
   assert(lexer2.nextToken().tokenType == TokenType::END_OF_FILE);
   std::cout << ">>> Lexer anaylisis done sucessfully , test passed ...\n";
 }
+
+void tesingMuiltpleCharactersKeyWords() {
+  std::cout << "\n-----------------------------------------------\n";
+  std::cout << ">>> Lexer anaylisis tesing, testing Invalid Identifiers.....\n";
+  std::string code = "if else fn five true false return !";
+  std::cout << "Testing " << code << '\n';
+  Lexer lexer(code);
+  assert(lexer.nextToken().tokenType == TokenType::IF);
+  assert(lexer.nextToken().tokenType == TokenType::ELSE);
+  assert(lexer.nextToken().tokenType == TokenType::FUNCTION);
+  assert(lexer.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer.nextToken().tokenType == TokenType::TRUE);
+  assert(lexer.nextToken().tokenType == TokenType::FALSE);
+  assert(lexer.nextToken().tokenType == TokenType::RETURN);
+  assert(lexer.nextToken().tokenType == TokenType::BANG);
+
+  code = "let result = add(five,ten);\n !-/*5; \n 5 < 10 > 5;";
+  std::cout << "Testing " << code << '\n';
+  Lexer lexer2(code);
+  assert(lexer2.nextToken().tokenType == TokenType::LET);
+  assert(lexer2.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer2.nextToken().tokenType == TokenType::ASSIGN);
+  assert(lexer2.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer2.nextToken().tokenType == TokenType::LEFT_PARENTHESES);
+  assert(lexer2.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer2.nextToken().tokenType == TokenType::COMMA);
+  assert(lexer2.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer2.nextToken().tokenType == TokenType::RIGHT_PARENTHESES);
+  assert(lexer2.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer2.nextToken().tokenType == TokenType::BANG);
+  assert(lexer2.nextToken().tokenType == TokenType::MINUS);
+  assert(lexer2.nextToken().tokenType == TokenType::SLASH);
+  assert(lexer2.nextToken().tokenType == TokenType::ASTERISK);
+  assert(lexer2.nextToken().tokenType == TokenType::INT);
+  assert(lexer2.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer2.nextToken().tokenType == TokenType::INT);
+  assert(lexer2.nextToken().tokenType == TokenType::LT);
+  assert(lexer2.nextToken().tokenType == TokenType::INT);
+  assert(lexer2.nextToken().tokenType == TokenType::GT);
+  assert(lexer2.nextToken().tokenType == TokenType::INT);
+  assert(lexer2.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer2.nextToken().tokenType == TokenType::END_OF_FILE);
+
+  code = "let five = 5;let ten = 10; let add = fn(x, y) {x + y;};let result = "
+         "add(five, ten);!-/*5;5 < 10 > 5;if (5 < 10) {return true;} else "
+         "{return false;}";
+  std::cout << "Testing " << code << '\n';
+  Lexer lexer3(code);
+  assert(lexer3.nextToken().tokenType == TokenType::LET);
+  assert(lexer3.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer3.nextToken().tokenType == TokenType::ASSIGN);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::LET);
+  assert(lexer3.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer3.nextToken().tokenType == TokenType::ASSIGN);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::LET);
+  assert(lexer3.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer3.nextToken().tokenType == TokenType::ASSIGN);
+  assert(lexer3.nextToken().tokenType == TokenType::FUNCTION);
+  assert(lexer3.nextToken().tokenType == TokenType::LEFT_PARENTHESES);
+  assert(lexer3.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer3.nextToken().tokenType == TokenType::COMMA);
+  assert(lexer3.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer3.nextToken().tokenType == TokenType::RIGHT_PARENTHESES);
+  assert(lexer3.nextToken().tokenType == TokenType::LEFT_BRACE);
+  assert(lexer3.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer3.nextToken().tokenType == TokenType::PLUS);
+  assert(lexer3.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::RIGHT_BRACE);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::LET);
+  assert(lexer3.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer3.nextToken().tokenType == TokenType::ASSIGN);
+  assert(lexer3.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer3.nextToken().tokenType == TokenType::LEFT_PARENTHESES);
+  assert(lexer3.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer3.nextToken().tokenType == TokenType::COMMA);
+  assert(lexer3.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer3.nextToken().tokenType == TokenType::RIGHT_PARENTHESES);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::BANG);
+  assert(lexer3.nextToken().tokenType == TokenType::MINUS);
+  assert(lexer3.nextToken().tokenType == TokenType::SLASH);
+  assert(lexer3.nextToken().tokenType == TokenType::ASTERISK);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::LT);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::GT);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::IF);
+  assert(lexer3.nextToken().tokenType == TokenType::LEFT_PARENTHESES);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::LT);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::RIGHT_PARENTHESES);
+  assert(lexer3.nextToken().tokenType == TokenType::LEFT_BRACE);
+  assert(lexer3.nextToken().tokenType == TokenType::RETURN);
+  assert(lexer3.nextToken().tokenType == TokenType::TRUE);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::RIGHT_BRACE);
+  assert(lexer3.nextToken().tokenType == TokenType::ELSE);
+  assert(lexer3.nextToken().tokenType == TokenType::LEFT_BRACE);
+  assert(lexer3.nextToken().tokenType == TokenType::RETURN);
+  assert(lexer3.nextToken().tokenType == TokenType::FALSE);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::RIGHT_BRACE);
+
+  std::cout << ">>> Lexer anaylisis done sucessfully , test passed ...\n";
+}
 void LexerTest::run() {
   testOnlyKeyWords();
   testKeyWordsAndIdentifiers();
@@ -192,4 +308,5 @@ void LexerTest::run() {
   testInvalidIdentifiers();
   testSpaces();
   testingNoSpacesBetweenKeywords();
+  tesingMuiltpleCharactersKeyWords();
 }
