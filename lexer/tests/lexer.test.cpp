@@ -230,7 +230,8 @@ void tesingMuiltpleCharactersKeyWords() {
 
   code = "let five = 5;let ten = 10; let add = fn(x, y) {x + y;};let result = "
          "add(five, ten);!-/*5;5 < 10 > 5;if (5 < 10) {return true;} else "
-         "{return false;}";
+         "{return false;} 10 == 10; 10==10;  10 ==10; 10== 10; 10!=9; 10!= 9; "
+         "10 !=9; 10 !=9;";
   std::cout << "Testing " << code << '\n';
   Lexer lexer3(code);
   assert(lexer3.nextToken().tokenType == TokenType::LET);
@@ -298,6 +299,39 @@ void tesingMuiltpleCharactersKeyWords() {
   assert(lexer3.nextToken().tokenType == TokenType::FALSE);
   assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
   assert(lexer3.nextToken().tokenType == TokenType::RIGHT_BRACE);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::EQUAL);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::EQUAL);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::EQUAL);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::EQUAL);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::NOT_EQUAL);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::NOT_EQUAL);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::NOT_EQUAL);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::NOT_EQUAL);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::END_OF_FILE);
 
   std::cout << ">>> Lexer anaylisis done sucessfully , test passed ...\n";
 }
