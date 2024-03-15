@@ -104,6 +104,28 @@ void testKeyWordsAndIdentifiers() {
   std::cout << ">>> Lexer anaylisis done sucessfully , test passed ...\n";
 }
 
+void testingNumbers() {
+  std::cout << "\n-----------------------------------------------\n";
+  std::cout << ">>> Lexer anaylisis tesing, testing Numbers.....\n";
+  std::string code = "55";
+  std::cout << "Testing " << code << '\n';
+  Lexer lexer(code);
+  assert(lexer.nextToken().tokenType == TokenType::INT);
+  assert(lexer.nextToken().tokenType == TokenType::END_OF_FILE);
+
+  code = "five5 55 5 = 5;";
+  std::cout << "Testing " << code << '\n';
+  Lexer lexer2(code);
+  assert(lexer2.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer2.nextToken().tokenType == TokenType::INT);
+  assert(lexer2.nextToken().tokenType == TokenType::INT);
+  assert(lexer2.nextToken().tokenType == TokenType::ASSIGN);
+  assert(lexer2.nextToken().tokenType == TokenType::INT);
+  assert(lexer2.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer2.nextToken().tokenType == TokenType::END_OF_FILE);
+  std::cout << ">>> Lexer anaylisis done sucessfully , test passed ...\n";
+}
+
 void testValidIdentifiers() {
   std::cout << "\n-----------------------------------------------\n";
   std::cout << ">>> Lexer anaylisis tesing, testing Valid Identifiers.....\n";
@@ -121,10 +143,29 @@ void testValidIdentifiers() {
 void testInvalidIdentifiers() {
   std::cout << "\n-----------------------------------------------\n";
   std::cout << ">>> Lexer anaylisis tesing, testing Invalid Identifiers.....\n";
-  std::cout << "Testing five!\n";
-  Lexer lexer("five!");
+  std::string code = "five!";
+  std::cout << "Testing " << code << '\n';
+  Lexer lexer(code);
+  assert(lexer.nextToken().tokenType == TokenType::IDENTIFIER);
   assert(lexer.nextToken().tokenType == TokenType::ILLEGAL);
   assert(lexer.nextToken().tokenType == TokenType::END_OF_FILE);
+
+  code = "five!!";
+  std::cout << "Testing " << code << '\n';
+  Lexer lexer2(code);
+  assert(lexer2.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer2.nextToken().tokenType == TokenType::ILLEGAL);
+  assert(lexer2.nextToken().tokenType == TokenType::ILLEGAL);
+  assert(lexer2.nextToken().tokenType == TokenType::END_OF_FILE);
+
+  code = "5five;five"; /// TODO make this case invalid
+  std::cout << "Testing " << code << '\n';
+  Lexer lexer3(code);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::IDENTIFIER);
+  assert(lexer3.nextToken().tokenType == TokenType::END_OF_FILE);
   std::cout << ">>> Lexer anaylisis done sucessfully , test passed ...\n";
 }
 

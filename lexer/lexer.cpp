@@ -1,6 +1,5 @@
 #include "lexer.hpp"
 #include "../tokens/Token.hpp"
-#include <iostream>
 #include <string>
 
 Lexer::Lexer(std::string sourceCode) {
@@ -14,25 +13,45 @@ Token Lexer::nextToken() {
   if (!this->hasNext()) {
     return TokenActions::createToken("");
   }
-  std::string tokenSoFar = std::string(1, this->sourceCode[this->currentIndex]);
+  std::string tokenSoFar = this->getNextChar();
   this->currentIndex++;
-  while (this->currentIndex < this->sourceCode.size()) {
+  while (hasNext()) {
+    std::string nextChar = getNextChar();
     if (tokenSoFar == " " || tokenSoFar == "\n") {
-      tokenSoFar = std::string(1, this->sourceCode[this->currentIndex]);
-      currentIndex++;
+      tokenSoFar = "";
+      tokenSoFar += nextChar;
+      this->currentIndex++;
       continue;
     }
     if (TokenActions::isValidKeyword(tokenSoFar)) {
+      if (TokenActions::isValidKeyword(tokenSoFar + nextChar)) {
+        tokenSoFar += nextChar;
+        this->currentIndex++;
+        continue;
+      }
       return TokenActions::createToken(tokenSoFar);
     }
-    const std::string nextToken =
-        std::string(1, this->sourceCode[this->currentIndex]);
-    if (TokenActions::isValidKeyword(nextToken) || nextToken == " " ||
-        nextToken == "\n") {
+    if (TokenActions::isValidIdentifier(tokenSoFar)) {
+      if (TokenActions::isValidIdentifier(tokenSoFar + nextChar)) {
+        tokenSoFar += nextChar;
+        this->currentIndex++;
+        continue;
+      }
       return TokenActions::createToken(tokenSoFar);
     }
-    tokenSoFar += this->sourceCode[this->currentIndex];
-    this->currentIndex++;
+    if (TokenActions::isValidInteger(tokenSoFar)) {
+      if (TokenActions::isValidInteger(tokenSoFar + nextChar)) {
+        tokenSoFar += nextChar;
+        this->currentIndex++;
+        continue;
+      }
+      return TokenActions::createToken(tokenSoFar);
+    }
+    return {TokenType::ILLEGAL, tokenSoFar};
   }
   return TokenActions::createToken(tokenSoFar);
+}
+
+std::string Lexer::getNextChar() {
+  return std::string(1, this->sourceCode[this->currentIndex]);
 }

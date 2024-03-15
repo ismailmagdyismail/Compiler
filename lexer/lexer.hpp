@@ -19,6 +19,7 @@ private:
   int currentIndex;
   std::string sourceCode;
   bool hasNext();
+  std::string getNextChar();
 };
 
 #endif

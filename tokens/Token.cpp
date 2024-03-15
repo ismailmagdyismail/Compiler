@@ -16,8 +16,9 @@ std::unordered_map<std::string, Token> keywords{
     {"let", {TokenType::LET, "let"}},
     {"", {TokenType::END_OF_FILE, ""}}};
 
-bool isValidIdentfier(std::string identifier);
-bool isValidInteger(std::string number);
+bool TokenActions::isValidKeyword(std::string code) {
+  return keywords.find(code) != keywords.end();
+}
 
 Token TokenActions::createToken(std::string code) {
   TokenType tokenType = TokenType::ILLEGAL;
@@ -27,17 +28,13 @@ Token TokenActions::createToken(std::string code) {
     literal = keywords[code].literalValue;
   } else if (isValidInteger(code)) {
     tokenType = TokenType::INT;
-  } else if (isValidIdentfier(code)) {
+  } else if (TokenActions::isValidIdentifier(code)) {
     tokenType = TokenType::IDENTIFIER;
   }
   return {tokenType, literal};
 }
 
-bool TokenActions::isValidKeyword(std::string code) {
-  return keywords.find(code) != keywords.end();
-}
-
-bool isValidIdentfier(std::string identifier) {
+bool TokenActions::isValidIdentifier(std::string identifier) {
   if (identifier.empty()) {
     return false;
   }
@@ -51,7 +48,8 @@ bool isValidIdentfier(std::string identifier) {
   }
   return true;
 }
-bool isValidInteger(std::string number) {
+
+bool TokenActions::isValidInteger(std::string number) {
   for (int i = 0; i < number.size(); i++) {
     if (!isdigit(number[i])) {
       return false;
