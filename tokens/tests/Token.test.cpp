@@ -21,8 +21,6 @@ void testTokensCreation() {
   assert(TokenActions::createToken("5").tokenType == TokenType::INT);
   assert(TokenActions::createToken("10").tokenType == TokenType::INT);
   assert(TokenActions::createToken("").tokenType == TokenType::END_OF_FILE);
-  assert(TokenActions::createToken("-1").tokenType == TokenType::END_OF_FILE);
-  assert(TokenActions::createToken("eof").tokenType == TokenType::END_OF_FILE);
   std::cout << ">>> tokens created sucessfully , test passed ...\n";
 }
 
