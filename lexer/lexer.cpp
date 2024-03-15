@@ -23,6 +23,7 @@ Token Lexer::nextToken() {
       this->currentIndex++;
       continue;
     }
+    /// TODO abstract into more generic structur,since they are very similar
     if (TokenActions::isValidKeyword(tokenSoFar)) {
       if (TokenActions::isValidKeyword(tokenSoFar + nextChar)) {
         tokenSoFar += nextChar;
