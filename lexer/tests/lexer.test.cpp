@@ -172,20 +172,17 @@ void testInvalidIdentifiers() {
 void testingNoSpacesBetweenKeywords() {
   std::cout << "\n-----------------------------------------------\n";
   std::cout << ">>> Lexer anaylisis tesing, testing Invalid Identifiers.....\n";
-  // TODO this should fail , should be tokenized as Identifier
   std::string code = "fnfive";
   std::cout << "Testing " << code << '\n';
   Lexer lexer(code);
-
-  // should faile
-  assert(lexer.nextToken().tokenType == TokenType::FUNCTION);
   assert(lexer.nextToken().tokenType == TokenType::IDENTIFIER);
   assert(lexer.nextToken().tokenType == TokenType::END_OF_FILE);
 
-  // correct test version
-  // assert(lexer.nextToken().tokenType == TokenType::IDENTIFIER);
-  // assert(lexer.nextToken().tokenType == TokenType::END_OF_FILE);
-
+  code = "fn";
+  std::cout << "Testing " << code << '\n';
+  Lexer lexer2(code);
+  assert(lexer2.nextToken().tokenType == TokenType::FUNCTION);
+  assert(lexer2.nextToken().tokenType == TokenType::END_OF_FILE);
   std::cout << ">>> Lexer anaylisis done sucessfully , test passed ...\n";
 }
 void LexerTest::run() {

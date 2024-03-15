@@ -1,5 +1,6 @@
 #include "Token.hpp"
 #include <cctype>
+#include <iostream>
 #include <string>
 #include <unordered_map>
 

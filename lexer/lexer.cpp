@@ -24,16 +24,16 @@ Token Lexer::nextToken() {
       continue;
     }
     /// TODO abstract into more generic structur,since they are very similar
-    if (TokenActions::isValidKeyword(tokenSoFar)) {
-      if (TokenActions::isValidKeyword(tokenSoFar + nextChar)) {
+    if (TokenActions::isValidIdentifier(tokenSoFar)) {
+      if (TokenActions::isValidIdentifier(tokenSoFar + nextChar)) {
         tokenSoFar += nextChar;
         this->currentIndex++;
         continue;
       }
       return TokenActions::createToken(tokenSoFar);
     }
-    if (TokenActions::isValidIdentifier(tokenSoFar)) {
-      if (TokenActions::isValidIdentifier(tokenSoFar + nextChar)) {
+    if (TokenActions::isValidKeyword(tokenSoFar)) {
+      if (TokenActions::isValidKeyword(tokenSoFar + nextChar)) {
         tokenSoFar += nextChar;
         this->currentIndex++;
         continue;
