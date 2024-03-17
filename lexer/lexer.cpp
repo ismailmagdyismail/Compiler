@@ -11,7 +11,10 @@ Lexer::Lexer(std::string sourceCode) {
 
 bool Lexer::hasNext() { return this->currentIndex < this->sourceCode.size(); }
 
-/* TODO REFACTOR THIS, it is too procedural/sequence dependant, hard to read*/
+/*
+- TODO REFACTOR THIS, it is too procedural/sequence dependant, hard to read
+- Shittest code I have ever written !
+*/
 Token Lexer::nextToken() {
   if (!this->hasNext()) {
     return TokenActions::createToken("");
