@@ -1,3 +1,8 @@
 #include "./Expression.hpp"
+#include <iostream>
 
-std::string ExpressionNode::getTokenLiteral() { return "Expression"; }
+std::string Expression::getNodeType() { return "ExpressionNode"; }
+
+Expression::~Expression() {
+  std::cout << "Deleting expression baseNode"; // debugging
+}

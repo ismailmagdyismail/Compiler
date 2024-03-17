@@ -1,11 +1,12 @@
 #ifndef __STATMENT_HPP__
 #define __STATMENT_HPP__
 
-#include "../IAST.hpp"
+#include "../IASTNode.hpp"
 
-class StatmentNode : public ASTNode {
+class Statement : public ASTNode {
 public:
-  virtual std::string getTokenLiteral() override;
+  virtual std::string getNodeType() override;
+  virtual ~Statement();
 };
 
 #endif
