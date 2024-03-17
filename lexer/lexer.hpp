@@ -5,7 +5,6 @@
 #include <string>
 
 /**
-- Current version is treaing source code as Pure text
 - future versions may read source code from files and additional info for better
 error messages (linenumber,filename,etc...)
 */
