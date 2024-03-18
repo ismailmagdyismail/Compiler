@@ -2,10 +2,10 @@
 #define __RVALUEIDENTIFIER_HPP
 
 #include "../../../tokens/Token.hpp"
-#include "../Expression.hpp"
+#include "../IExpression.hpp"
 #include <string>
 
-class RValueIdentifier : public Expression {
+class RValueIdentifier : public IExpression {
 public:
   RValueIdentifier(Token token, std::string value);
   virtual std::string getTokenLiteral() override;

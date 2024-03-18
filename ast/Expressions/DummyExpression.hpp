@@ -1,8 +1,8 @@
 #ifndef __DUMMYEXPRESSION_HPP__
 #define __DUMMYEXPRESSION_HPP__
-#include "./Expression.hpp"
+#include "./IExpression.hpp"
 
-class DummyExpression : public Expression {
+class DummyExpression : public IExpression {
 public:
   DummyExpression();
   virtual std::string getTokenLiteral() override;

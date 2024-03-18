@@ -1,7 +1,7 @@
 #include "./LetStatement.hpp"
 #include <iostream>
 
-LetStatement::LetStatement(LValueIdentifier identifier, Expression *value)
+LetStatement::LetStatement(LValueIdentifier identifier, IExpression *value)
     : identifier(identifier) {
   this->token = TokenActions::createToken(TokenType::LET);
   this->value = value;

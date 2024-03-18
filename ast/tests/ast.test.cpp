@@ -1,10 +1,10 @@
 #include "./ast.test.hpp"
 #include "../Expressions/DummyExpression.hpp"
-#include "../Expressions/Expression.hpp"
+#include "../Expressions/IExpression.hpp"
 #include "../Expressions/RValueIdentifier/RValueIdentifier.hpp"
+#include "../Statements/IStatement.hpp"
 #include "../Statements/LValueIdentifier/LValueIdentifier.hpp"
 #include "../Statements/LetStatment/LetStatement.hpp"
-#include "../Statements/Statment.hpp"
 #include <iostream>
 
 /*
@@ -15,7 +15,6 @@
 */
 void testStatementNodes() {
   std::cout << "Testing StatmentNodes ....\n";
-
   ASTNode *statmentPointer = new LetStatement({TokenActions::createToken("-1")},
                                               new DummyExpression());
   delete statmentPointer;
@@ -31,8 +30,8 @@ void testExpressionNodes() {
 
 void testIdentifierNodes() {
   std::cout << "Testing IdentifierNodes ....\n";
-  Statement *lValue = new LValueIdentifier(TokenActions::createToken("-1"));
-  Expression *rValue =
+  IStatement *lValue = new LValueIdentifier(TokenActions::createToken("-1"));
+  IExpression *rValue =
       new RValueIdentifier(TokenActions::createToken("-1"), "-1");
   delete lValue;
   delete rValue;

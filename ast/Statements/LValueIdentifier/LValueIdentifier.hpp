@@ -2,9 +2,9 @@
 #define __LVALUEIDENTIFIER_HPP
 
 #include "../../../tokens/Token.hpp"
-#include "../Statment.hpp"
+#include "../IStatement.hpp"
 
-class LValueIdentifier : public Statement {
+class LValueIdentifier : public IStatement {
 public:
   LValueIdentifier(Token token);
   virtual std::string getTokenLiteral() override;

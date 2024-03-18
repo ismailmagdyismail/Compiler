@@ -1,6 +1,6 @@
-#include "./Expression.hpp"
+#include "./IExpression.hpp"
 #include <iostream>
 
-Expression::~Expression() {
+IExpression::~IExpression() {
   std::cout << "Deleting expression baseNode\n"; // debugging
 }

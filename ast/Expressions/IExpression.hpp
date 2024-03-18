@@ -8,9 +8,9 @@
  - Act as a facade for its internal attributes to provide better encapsulation
 */
 
-class Expression : public ASTNode {
+class IExpression : public ASTNode {
 public:
-  virtual ~Expression();
+  virtual ~IExpression();
 };
 
 #endif
