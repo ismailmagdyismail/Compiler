@@ -5,12 +5,12 @@
 
 /*
  - Compund Pattern
- - Act as a facade for its internal attributes
+ - Act as a facade for its internal attributes to provide better encapsulation
 */
 
 class Expression : public ASTNode {
 public:
-  virtual std::string getNodeType() override;
+  std::string getNodeType() override;
   virtual ~Expression();
 };
 

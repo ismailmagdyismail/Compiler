@@ -6,6 +6,7 @@ class ASTNode {
 public:
   virtual std::string getTokenLiteral() = 0; // for debugging
   virtual std::string getNodeType() = 0;     // for debugging
+  virtual ~ASTNode();
 };
 
 #endif

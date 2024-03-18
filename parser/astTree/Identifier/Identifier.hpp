@@ -1,7 +1,7 @@
 #ifndef __IDENTIFIER_HPP
 #define __IDENTIFIER_HPP
 
-#include "../../tokens/Token.hpp"
+#include "../../../tokens/Token.hpp"
 #include "../IASTNode.hpp"
 
 class Identifier : public ASTNode {

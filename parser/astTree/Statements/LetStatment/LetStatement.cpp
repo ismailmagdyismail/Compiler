@@ -1,4 +1,5 @@
 #include "./LetStatement.hpp"
+#include <iostream>
 
 LetStatement::LetStatement(Identifier identifier, Expression *value)
     : identifier(identifier) {
@@ -12,6 +13,6 @@ std::string LetStatement::getIdentifierLiteral() {
 }
 
 LetStatement::~LetStatement() {
-  // TODO
+  std::cout << "Deleting Let statment\n";
   delete this->value;
 }

@@ -4,5 +4,5 @@
 std::string Expression::getNodeType() { return "ExpressionNode"; }
 
 Expression::~Expression() {
-  std::cout << "Deleting expression baseNode"; // debugging
+  std::cout << "Deleting expression baseNode\n"; // debugging
 }

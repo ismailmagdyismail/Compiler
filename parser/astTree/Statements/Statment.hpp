@@ -3,9 +3,13 @@
 
 #include "../IASTNode.hpp"
 
+/*
+ - Compund Pattern
+ - Act as a facade for its internal attributes
+*/
 class Statement : public ASTNode {
 public:
-  virtual std::string getNodeType() override;
+  std::string getNodeType() override;
   virtual ~Statement();
 };
 

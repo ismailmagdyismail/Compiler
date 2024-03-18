@@ -4,5 +4,5 @@
 std::string Statement::getNodeType() { return "StatementNode"; }
 
 Statement::~Statement() {
-  std::cout << "Deleting Statement baseNode "; // Deubugging
+  std::cout << "Deleting Statement baseNode \n"; // Deubugging
 }
