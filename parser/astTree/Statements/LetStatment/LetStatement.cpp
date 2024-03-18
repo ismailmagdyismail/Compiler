@@ -1,8 +1,9 @@
 #include "./LetStatement.hpp"
 #include <iostream>
 
-LetStatement::LetStatement(Identifier identifier, Expression *value)
+LetStatement::LetStatement(LValueIdentifier identifier, Expression *value)
     : identifier(identifier) {
+  this->token = TokenActions::createToken(TokenType::LET);
   this->value = value;
 }
 

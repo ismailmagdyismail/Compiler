@@ -10,7 +10,6 @@
 
 class Expression : public ASTNode {
 public:
-  std::string getNodeType() override;
   virtual ~Expression();
 };
 

@@ -1,7 +1,8 @@
 #include "./ast.test.hpp"
 #include "../Expressions/DummyExpression.hpp"
 #include "../Expressions/Expression.hpp"
-#include "../Identifier/Identifier.hpp"
+#include "../Expressions/RValueIdentifier/RValueIdentifier.hpp"
+#include "../Statements/LValueIdentifier/LValueIdentifier.hpp"
 #include "../Statements/LetStatment/LetStatement.hpp"
 #include "../Statements/Statment.hpp"
 #include <iostream>
@@ -9,7 +10,7 @@
 /*
     - Test Virtual destrcutors for all Node Types of the tree to make sure there
    is no memory leak
-   - This have to be tested manually , verify console logs against desired
+    - This have to be tested manually , verify console logs against desired
    output
 */
 void testStatementNodes() {
@@ -30,8 +31,10 @@ void testExpressionNodes() {
 
 void testIdentifierNodes() {
   std::cout << "Testing IdentifierNodes ....\n";
-  ASTNode *identifierPointer = new Identifier(TokenActions::createToken("-1"));
-  delete identifierPointer;
+  Statement *lValue = new LValueIdentifier(TokenActions::createToken("-1"));
+  Expression *rValue = new RValueIdentifier(TokenActions::createToken("-1"));
+  delete lValue;
+  delete rValue;
   std::cout << "Done Testing IdentifierNodes sucessfully ....\n";
 }
 

@@ -6,6 +6,7 @@ class DummyExpression : public Expression {
 public:
   DummyExpression();
   virtual std::string getTokenLiteral() override;
+  virtual std::string getNodeType() override;
   virtual ~DummyExpression();
 };
 

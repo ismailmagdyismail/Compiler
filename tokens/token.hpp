@@ -50,6 +50,7 @@ struct Token {
 
 namespace TokenActions {
 Token createToken(std::string code);
+Token createToken(TokenType code);
 bool isValidKeyword(std::string code);
 bool isValidIdentifier(std::string identifier);
 bool isValidInteger(std::string number);
