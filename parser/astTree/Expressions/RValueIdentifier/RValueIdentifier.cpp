@@ -1,7 +1,10 @@
 #include "./RValueIdentifier.hpp"
 #include <iostream>
 
-RValueIdentifier::RValueIdentifier(Token token) { this->token = token; }
+RValueIdentifier::RValueIdentifier(Token token, std::string value) {
+  this->token = token;
+  this->value = value;
+}
 
 std::string RValueIdentifier::getTokenLiteral() {
   return this->token.literalValue;
