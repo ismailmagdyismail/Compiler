@@ -8,7 +8,7 @@
  - Act as a facade for its internal attributes to provide better encapsulation
 */
 
-class IExpression : public ASTNode {
+class IExpression : public IASTNode {
 public:
   virtual ~IExpression();
 };

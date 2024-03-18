@@ -7,7 +7,7 @@
  - Compund Pattern
  - Act as a facade for its internal attributes
 */
-class IStatement : public ASTNode {
+class IStatement : public IASTNode {
 public:
   std::string getNodeType() override;
   virtual ~IStatement();

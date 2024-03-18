@@ -15,15 +15,15 @@
 */
 void testStatementNodes() {
   std::cout << "Testing StatmentNodes ....\n";
-  ASTNode *statmentPointer = new LetStatement({TokenActions::createToken("-1")},
-                                              new DummyExpression());
+  IASTNode *statmentPointer = new LetStatement(
+      {TokenActions::createToken("-1")}, new DummyExpression());
   delete statmentPointer;
   std::cout << "Done Testing StatmentNodes sucessfully ....\n";
 }
 
 void testExpressionNodes() {
   std::cout << "Testing ExpressionNodes ....\n";
-  ASTNode *expressionPointer = new DummyExpression();
+  IASTNode *expressionPointer = new DummyExpression();
   delete expressionPointer;
   std::cout << "Done Testing ExpressionNodes sucessfully ....\n";
 }

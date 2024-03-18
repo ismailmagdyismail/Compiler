@@ -2,11 +2,11 @@
 #define __IAST_HPP__
 #include <string>
 
-class ASTNode {
+class IASTNode {
 public:
   virtual std::string getTokenLiteral() = 0; // for debugging
   virtual std::string getNodeType() = 0;     // for debugging
-  virtual ~ASTNode();
+  virtual ~IASTNode();
 };
 
 #endif
