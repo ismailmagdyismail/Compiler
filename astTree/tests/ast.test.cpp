@@ -32,7 +32,8 @@ void testExpressionNodes() {
 void testIdentifierNodes() {
   std::cout << "Testing IdentifierNodes ....\n";
   Statement *lValue = new LValueIdentifier(TokenActions::createToken("-1"));
-  Expression *rValue = new RValueIdentifier(TokenActions::createToken("-1"));
+  Expression *rValue =
+      new RValueIdentifier(TokenActions::createToken("-1"), "-1");
   delete lValue;
   delete rValue;
   std::cout << "Done Testing IdentifierNodes sucessfully ....\n";

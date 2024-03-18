@@ -1,6 +1,6 @@
-#include "./tokens/tests/Token.test.hpp"
+#include "astTree/tests/ast.test.hpp"
 #include "lexer/tests/lexer.test.hpp"
-#include "parser/astTree/tests/ast.test.hpp"
+#include "tokens/tests/Token.test.hpp"
 #include <iostream>
 
 int main() {
