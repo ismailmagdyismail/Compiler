@@ -1,20 +1,17 @@
 #include "./parser.test.hpp"
 #include "../../lexer/lexer.hpp"
 #include "../Parser.hpp"
+#include "../exceptions/ParserError.hpp"
 #include <cassert>
 #include <iostream>
-#include <vector>
-
 void testParsingLetStatement() {
   std::cout << ">>> Parser  tesing, testing LET Statment parsing .....\n";
-  Parser parser = Parser({"let x = 10;"});
-  std::vector<Token> tokens = parser.parseProgram();
-  assert(tokens.size() == 4);
-  assert(tokens[0].tokenType == TokenType::LET);
-  assert(tokens[1].tokenType == TokenType::IDENTIFIER);
-  assert(tokens[2].tokenType == TokenType::ASSIGN);
-  assert(tokens[3].tokenType == TokenType::IDENTIFIER ||
-         tokens[3].tokenType == TokenType::INT);
+  Parser parser = Parser({"let x = 10; let y =10; let z = x;"});
+  AST ast = parser.parseProgram();
+  assert(ast.size() == 3);
+  assert(ast.getStatement(0)->getTokenLiteral() == "let");
+  assert(ast.getStatement(1)->getTokenLiteral() == "let");
+  assert(ast.getStatement(2)->getTokenLiteral() == "let");
 
   std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }

@@ -9,7 +9,7 @@
 */
 class IStatement : public IASTNode {
 public:
-  std::string getNodeType() override;
+  virtual IStatement *clone() = 0;
   virtual ~IStatement();
 };
 

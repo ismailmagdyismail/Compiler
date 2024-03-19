@@ -12,9 +12,16 @@
 
 class LetStatement : public IStatement {
 public:
+  LetStatement(const LetStatement &other);
   LetStatement(LValueIdentifier identifier, IExpression *value);
+  LetStatement &operator=(const LetStatement &other);
+
   virtual std::string getTokenLiteral() override;
+  virtual std::string getNodeType() override;
+  virtual IStatement *clone() override;
+  std::string getValueLiteral();
   std::string getIdentifierLiteral();
+
   ~LetStatement();
 
 private:

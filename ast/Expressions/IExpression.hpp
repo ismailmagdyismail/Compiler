@@ -10,6 +10,7 @@
 
 class IExpression : public IASTNode {
 public:
+  virtual IExpression *clone() = 0;
   virtual ~IExpression();
 };
 

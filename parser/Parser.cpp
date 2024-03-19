@@ -1,55 +1,58 @@
 #include "./Parser.hpp"
+#include "../ast/Expressions/IExpression.hpp"
+#include "../ast/Expressions/RValueIdentifier/RValueIdentifier.hpp"
+#include "../ast/Statements/LetStatment/LetStatement.hpp"
 #include "./exceptions/ParserError.hpp"
-#include <vector>
 
 Parser::Parser(Lexer lexer) : lexer(lexer) { this->nextToken(); }
 
 void Parser::nextToken() { currentToken = lexer.nextToken(); }
 
-std::vector<Token> Parser::parseProgram() {
-  std::vector<Token> tokens;
-  if (this->currentToken.tokenType == TokenType::LET) {
-    tokens = this->parseLetStatement();
+AST Parser::parseProgram() {
+  AST ast;
+  while (this->currentToken.tokenType != TokenType::END_OF_FILE) {
+    IStatement *statement = this->parseStatement();
+    if (statement != nullptr) {
+      ast.addStatement(statement);
+    }
+    this->nextToken();
   }
-  nextToken();
-  return tokens;
+  return ast;
 }
 
-std::vector<Token> Parser::parseLetStatement() {
+IStatement *Parser::parseStatement() {
+  if (this->currentToken.tokenType == TokenType::LET) {
+    return this->parseLetStatement();
+  }
+  return nullptr;
+}
+
+IStatement *Parser::parseLetStatement() {
+  // TODO add parsing expression later , when
+  // expression parser is add
   if (this->currentToken.tokenType != TokenType::LET) {
-    throw ParserError(
-        "LET parsing error , Cannot run LET parser on A non LET token");
+    return nullptr;
   }
 
   this->nextToken();
   if (this->currentToken.tokenType != TokenType::IDENTIFIER) {
-    throw ParserError(
-        "LET parsing error , LET Token is not followed by an Identifier");
+    return nullptr;
   }
   Token identifierToken = this->currentToken;
 
   this->nextToken();
   if (this->currentToken.tokenType != TokenType::ASSIGN) {
-    throw ParserError("LET parsing error , LET Token doesn't have assign Token "
-                      "following it ");
+    return nullptr;
   }
-  Token assignToken = this->currentToken;
 
   this->nextToken();
-  if (this->currentToken.tokenType !=
-          TokenType::INT && // TODO add parsing expression later , when
-                            // expression parser is add
+  if (this->currentToken.tokenType != TokenType::INT &&
       this->currentToken.tokenType != TokenType::IDENTIFIER) {
-    throw ParserError(
-        "LET parsing error , LET Token doesn't have RValue assigned to it  ");
+    return nullptr;
   }
-  Token rValue = this->currentToken;
-
-  std::vector<Token> parsedTokens;
-  parsedTokens.push_back(TokenActions::createToken(TokenType::LET));
-  parsedTokens.push_back(identifierToken);
-  parsedTokens.push_back(assignToken);
-  parsedTokens.push_back(rValue);
-
-  return parsedTokens;
+  Token rValueToken = this->currentToken;
+  LValueIdentifier lValueIdentifier = LValueIdentifier(identifierToken);
+  IExpression *expression =
+      new RValueIdentifier(rValueToken, rValueToken.literalValue);
+  return new LetStatement(lValueIdentifier, expression);
 }

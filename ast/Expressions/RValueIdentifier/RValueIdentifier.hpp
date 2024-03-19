@@ -7,9 +7,12 @@
 
 class RValueIdentifier : public IExpression {
 public:
+  RValueIdentifier(const RValueIdentifier &other);
   RValueIdentifier(Token token, std::string value);
+  RValueIdentifier &operator=(const RValueIdentifier &other);
   virtual std::string getTokenLiteral() override;
   virtual std::string getNodeType() override;
+  virtual IExpression *clone() override;
   virtual ~RValueIdentifier();
 
 private:

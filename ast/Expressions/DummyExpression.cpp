@@ -8,6 +8,6 @@ std::string DummyExpression::getTokenLiteral() {
 }
 std::string DummyExpression::getNodeType() { return "Expression dymmy node"; }
 
-DummyExpression::~DummyExpression() {
-  std::cout << "Dummy Expression Node Destructor\n"; // denugging
-}
+IExpression *DummyExpression::clone() { return new DummyExpression(); }
+
+DummyExpression::~DummyExpression() {}
