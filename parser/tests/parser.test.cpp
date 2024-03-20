@@ -4,15 +4,32 @@
 #include "../exceptions/ParserError.hpp"
 #include <cassert>
 #include <iostream>
-void testParsingLetStatement() {
-  std::cout << ">>> Parser  tesing, testing LET Statment parsing .....\n";
+
+void testParsingCorrectLetStatement() {
+  std::cout
+      << ">>> Parser tesing, testing Correct LET Statment parsing .....\n";
   Parser parser = Parser({"let x = 10; let y =10; let z = x;"});
   AST ast = parser.parseProgram();
   assert(ast.size() == 3);
   assert(ast.getStatement(0)->getTokenLiteral() == "let");
   assert(ast.getStatement(1)->getTokenLiteral() == "let");
   assert(ast.getStatement(2)->getTokenLiteral() == "let");
-
+  assert(parser.getErrors().empty());
   std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
-void ParserTest::run() { testParsingLetStatement(); }
+
+void testParsingInCorrectLetStatement() {
+  std::cout
+      << ">>> Parser tesing, testing InCorrect LET Statment parsing .....\n";
+  Parser parser = Parser({"let 10;"});
+  AST ast = parser.parseProgram();
+  assert(ast.size() == 0);
+  assert(!parser.getErrors().empty());
+  assert(parser.getErrors().size() == 1);
+  std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
+}
+
+void ParserTest::run() {
+  testParsingCorrectLetStatement();
+  testParsingInCorrectLetStatement();
+}

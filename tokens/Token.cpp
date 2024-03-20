@@ -125,3 +125,8 @@ bool TokenActions::isValidInteger(std::string number) {
   }
   return true;
 }
+
+std::string TokenActions::getTokenLiteralValue(TokenType code) {
+  Token token = TokenActions::createToken(code);
+  return token.literalValue;
+}
