@@ -15,6 +15,7 @@ public:
 private:
   IStatement *parseStatement();
   IStatement *parseLetStatement();
+  IStatement *parseReturnExpression();
   void nextToken();
   void addError(std::string errorMessage);
   std::vector<std::string> errors;

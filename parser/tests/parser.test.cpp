@@ -29,7 +29,28 @@ void testParsingInCorrectLetStatement() {
   std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
 
+void testParsingCorrectReturnStatement() {
+  std::cout
+      << ">>> Parser tesing, testing Correct Return Statment parsing .....\n";
+  Parser parser = Parser({"return 10; return x; return 1992"});
+  AST ast = parser.parseProgram();
+  assert(ast.size() == 3);
+  assert(parser.getErrors().empty());
+  std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
+}
+
+void testParsingInCorrectReturnStatement() {
+  std::cout
+      << ">>> Parser tesing, testing InCorrect Return Statment parsing .....\n";
+  Parser parser = Parser({"return ; "});
+  AST ast = parser.parseProgram();
+  assert(ast.size() == 0);
+  assert(!parser.getErrors().empty());
+  assert(parser.getErrors().size() == 1);
+  std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
+}
 void ParserTest::run() {
   testParsingCorrectLetStatement();
   testParsingInCorrectLetStatement();
+  testParsingCorrectReturnStatement();
 }

@@ -2,6 +2,7 @@
 #include "../ast/Expressions/IExpression.hpp"
 #include "../ast/Expressions/RValueIdentifier/RValueIdentifier.hpp"
 #include "../ast/Statements/LetStatment/LetStatement.hpp"
+#include "../ast/Statements/ReturnStatement/ReturnStatement.hpp"
 #include "./exceptions/ParserError.hpp"
 #include <vector>
 
@@ -30,6 +31,9 @@ AST Parser::parseProgram() {
 IStatement *Parser::parseStatement() {
   if (this->currentToken.tokenType == TokenType::LET) {
     return this->parseLetStatement();
+  }
+  if (this->currentToken.tokenType == TokenType::RETURN) {
+    return this->parseReturnExpression();
   }
   return nullptr;
 }
@@ -69,4 +73,19 @@ IStatement *Parser::parseLetStatement() {
   IExpression *expression =
       new RValueIdentifier(rValueToken, rValueToken.literalValue);
   return new LetStatement(lValueIdentifier, expression);
+}
+
+IStatement *Parser::parseReturnExpression() {
+  if (this->currentToken.tokenType != TokenType::RETURN) {
+    this->addError("Invalid return statement");
+    return nullptr;
+  }
+  this->nextToken();
+  if (this->currentToken.tokenType != TokenType::IDENTIFIER &&
+      this->currentToken.tokenType != TokenType::INT) {
+    this->addError("Invalid return value ");
+    return nullptr;
+  }
+  return new ReturnStatement(new RValueIdentifier(
+      this->currentToken, this->currentToken.literalValue));
 }
