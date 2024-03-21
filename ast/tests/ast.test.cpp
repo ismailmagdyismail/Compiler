@@ -5,7 +5,6 @@
 #include "../Statements/IStatement.hpp"
 #include "../Statements/LValueIdentifier/LValueIdentifier.hpp"
 #include "../Statements/LetStatment/LetStatement.hpp"
-#include <cassert>
 #include <iostream>
 
 /*
