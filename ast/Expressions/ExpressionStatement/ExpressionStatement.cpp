@@ -29,4 +29,10 @@ std::string ExpressionStatement::getValueLiteral() {
   return this->value->getValueLiteral();
 }
 
+std::string ExpressionStatement::toString() { return this->value->toString(); }
+
+IExpression *ExpressionStatement::clone() {
+  return new ExpressionStatement(this->token, this->value->clone());
+}
+
 ExpressionStatement::~ExpressionStatement() { delete this->value; }

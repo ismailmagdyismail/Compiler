@@ -18,6 +18,7 @@ public:
 
   virtual std::string getTokenLiteral() override;
   virtual std::string getNodeType() override;
+  virtual std::string toString() override;
   virtual IStatement *clone() override;
   std::string getAssignedValue();
   std::string getIdentifierLiteral();

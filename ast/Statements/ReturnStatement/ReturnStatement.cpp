@@ -26,6 +26,11 @@ std::string ReturnStatement::getReturnedValue() {
   return this->value->getValueLiteral();
 }
 
+std::string ReturnStatement::toString() {
+  return TokenActions::getTokenLiteralValue(TokenType::RETURN) + " " +
+         this->value->toString();
+}
+
 IStatement *ReturnStatement::clone() {
   return new ReturnStatement(this->value->clone());
 }

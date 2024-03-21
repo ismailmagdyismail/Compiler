@@ -1,5 +1,4 @@
 #include "./RValueIdentifier.hpp"
-#include <iostream>
 
 RValueIdentifier::RValueIdentifier(const RValueIdentifier &other) {
   this->value = other.value;
@@ -24,6 +23,8 @@ std::string RValueIdentifier::getTokenLiteral() {
 std::string RValueIdentifier::getNodeType() { return "IdentifierNode"; }
 
 std::string RValueIdentifier::getValueLiteral() { return this->value; }
+
+std::string RValueIdentifier::toString() { return this->getValueLiteral(); }
 
 IExpression *RValueIdentifier::clone() {
   return new RValueIdentifier(this->token, this->value);

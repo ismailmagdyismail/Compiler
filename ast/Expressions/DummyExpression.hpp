@@ -8,6 +8,7 @@ public:
   virtual std::string getTokenLiteral() override;
   virtual std::string getNodeType() override;
   virtual std::string getValueLiteral() override;
+  virtual std::string toString() override;
   virtual IExpression *clone() override;
   virtual ~DummyExpression();
 };

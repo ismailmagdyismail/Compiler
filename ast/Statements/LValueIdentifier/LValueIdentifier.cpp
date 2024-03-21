@@ -18,6 +18,8 @@ std::string LValueIdentifier::getTokenLiteral() {
 
 std::string LValueIdentifier::getNodeType() { return "IdentifierNode"; }
 
+std::string LValueIdentifier::toString() { return this->getTokenLiteral(); }
+
 IStatement *LValueIdentifier::clone() {
   return new LValueIdentifier(this->token);
 }

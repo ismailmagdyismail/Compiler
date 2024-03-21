@@ -5,6 +5,7 @@
 #include "../Statements/IStatement.hpp"
 #include "../Statements/LValueIdentifier/LValueIdentifier.hpp"
 #include "../Statements/LetStatment/LetStatement.hpp"
+#include <cassert>
 #include <iostream>
 
 /*
@@ -15,9 +16,9 @@
 */
 void testStatementNodes() {
   std::cout << "Testing StatmentNodes ....\n";
-  IASTNode *statmentPointer = new LetStatement(
-      {TokenActions::createToken("-1")}, new DummyExpression());
-  delete statmentPointer;
+  IASTNode *statementPointer =
+      new LetStatement({TokenActions::createToken("x")}, new DummyExpression());
+  delete statementPointer;
   std::cout << "Done Testing StatmentNodes sucessfully ....\n";
 }
 

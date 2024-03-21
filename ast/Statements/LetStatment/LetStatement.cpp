@@ -31,6 +31,13 @@ std::string LetStatement::getAssignedValue() {
   return this->value->getValueLiteral();
 }
 
+std::string LetStatement::toString() {
+  return TokenActions::getTokenLiteralValue(TokenType::LET) + " " +
+         this->identifier.toString() + " " +
+         TokenActions::getTokenLiteralValue(TokenType::ASSIGN) + " " +
+         this->value->toString();
+}
+
 IStatement *LetStatement::clone() {
   return new LetStatement(this->identifier, value->clone());
 }

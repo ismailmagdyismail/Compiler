@@ -5,6 +5,9 @@
 #include "../IExpression.hpp"
 #include <string>
 
+/*
+    - a Leaf Node of the  tree (Compund pattern)
+*/
 class RValueIdentifier : public IExpression {
 public:
   RValueIdentifier(const RValueIdentifier &other);
@@ -13,6 +16,7 @@ public:
   virtual std::string getTokenLiteral() override;
   virtual std::string getNodeType() override;
   virtual std::string getValueLiteral() override;
+  virtual std::string toString() override;
   virtual IExpression *clone() override;
   virtual ~RValueIdentifier();
 

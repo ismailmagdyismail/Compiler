@@ -11,6 +11,7 @@ public:
   LValueIdentifier &operator=(const LValueIdentifier &other);
   virtual std::string getTokenLiteral() override;
   virtual std::string getNodeType() override;
+  virtual std::string toString() override;
   virtual IStatement *clone() override;
   virtual ~LValueIdentifier();
 
