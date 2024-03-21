@@ -14,6 +14,7 @@ public:
   virtual IStatement *clone() override;
   virtual std::string getTokenLiteral() override;
   virtual std::string getNodeType() override;
+  std::string getReturnedValue();
   std::string getValueLiteral();
 
   ~ReturnStatement();

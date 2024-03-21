@@ -31,7 +31,7 @@ void testParsingInCorrectLetStatement() {
 
 void testParsingCorrectReturnStatement() {
   std::cout
-      << ">>> Parser tesing, testing Correct Return Statment parsing .....\n";
+      << ">>> Parser tesing, testing Correct RETURN Statment parsing .....\n";
   Parser parser = Parser({"return 10; return x; return 1992"});
   AST ast = parser.parseProgram();
   assert(ast.size() == 3);
@@ -41,7 +41,7 @@ void testParsingCorrectReturnStatement() {
 
 void testParsingInCorrectReturnStatement() {
   std::cout
-      << ">>> Parser tesing, testing InCorrect Return Statment parsing .....\n";
+      << ">>> Parser tesing, testing InCorrect RETURN Statment parsing .....\n";
   Parser parser = Parser({"return ; "});
   AST ast = parser.parseProgram();
   assert(ast.size() == 0);

@@ -27,8 +27,8 @@ std::string LetStatement::getIdentifierLiteral() {
   return this->identifier.getTokenLiteral();
 }
 
-std::string LetStatement::getValueLiteral() {
-  return this->value->getTokenLiteral();
+std::string LetStatement::getAssignedValue() {
+  return this->value->getValueLiteral();
 }
 
 IStatement *LetStatement::clone() {

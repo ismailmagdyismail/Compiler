@@ -23,6 +23,8 @@ std::string RValueIdentifier::getTokenLiteral() {
 
 std::string RValueIdentifier::getNodeType() { return "IdentifierNode"; }
 
+std::string RValueIdentifier::getValueLiteral() { return this->value; }
+
 IExpression *RValueIdentifier::clone() {
   return new RValueIdentifier(this->token, this->value);
 }

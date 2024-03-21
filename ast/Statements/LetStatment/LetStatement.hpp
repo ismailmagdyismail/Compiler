@@ -19,7 +19,7 @@ public:
   virtual std::string getTokenLiteral() override;
   virtual std::string getNodeType() override;
   virtual IStatement *clone() override;
-  std::string getValueLiteral();
+  std::string getAssignedValue();
   std::string getIdentifierLiteral();
 
   ~LetStatement();
