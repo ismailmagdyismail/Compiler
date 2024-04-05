@@ -8,6 +8,7 @@
 #include "../ast/Statements/StandAloneStatement/StandAloneStatement.hpp"
 #include "../ast/programAST/AST.hpp"
 #include "../lexer/lexer.hpp"
+#include "Precedence.hpp"
 #include <functional>
 #include <string>
 #include <unordered_map>
@@ -25,7 +26,7 @@ private:
   IStatement *parseStatement();
   LetStatement *parseLetStatement();
   ReturnStatement *parseReturnStatement();
-  StandAloneStatement *parseStandAloneStatement();
+  StandAloneStatement *parseStandAloneStatement(Precedence precedence);
   RValueIdentifier *parseRvalueIdentifier();
 
   void nextToken();

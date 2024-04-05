@@ -3,6 +3,7 @@
 #include "../ast/Expressions/RValueIdentifier/RValueIdentifier.hpp"
 #include "../ast/Statements/LetStatment/LetStatement.hpp"
 #include "../ast/Statements/ReturnStatement/ReturnStatement.hpp"
+#include "Precedence.hpp"
 #include "functional"
 #include <iostream>
 #include <vector>
@@ -10,6 +11,9 @@
 Parser::Parser(Lexer lexer) : lexer(lexer) {
   this->nextToken();
   this->prefixParser[TokenType::IDENTIFIER] = [this]() -> IExpression * {
+    return this->parseRvalueIdentifier();
+  };
+  this->prefixParser[TokenType::INT] = [this]() -> IExpression * {
     return this->parseRvalueIdentifier();
   };
 }
@@ -41,7 +45,7 @@ IStatement *Parser::parseStatement() {
   if (this->currentToken.tokenType == TokenType::RETURN) {
     return this->parseReturnStatement();
   }
-  return this->parseStandAloneStatement();
+  return this->parseStandAloneStatement(LOWEST);
 }
 
 LetStatement *Parser::parseLetStatement() {
@@ -98,7 +102,7 @@ ReturnStatement *Parser::parseReturnStatement() {
       new RValueIdentifier(returnToken, returnToken.literalValue));
 }
 
-StandAloneStatement *Parser::parseStandAloneStatement() {
+StandAloneStatement *Parser::parseStandAloneStatement(Precedence precedence) {
   Token token = this->currentToken;
   auto prefixParser = this->prefixParser[token.tokenType];
   if (prefixParser == nullptr) {

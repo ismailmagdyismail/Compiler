@@ -1,7 +1,7 @@
 #ifndef __PRECEDENCE_HPP__
 #define __PRECEDENCE_HPP__
 
-enum precedence {
+enum Precedence {
   LOWEST,
   EQUALS,
   LESS_GREATER,
