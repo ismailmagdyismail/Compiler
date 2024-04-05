@@ -62,24 +62,30 @@ void testParsingInCorrectReturnStatement() {
 void testStandAloneRValueIdentifiers() {
   std::cout << ">>> Parser tesing, testing StandAloneRValueIdentifiers parsing "
                ".....\n";
-  // Parser parser1 = Parser({"x;"});
-  // AST ast1 = parser1.parseProgram();
+  Parser parser1 = Parser({"x;"});
+  AST ast1 = parser1.parseProgram();
   Parser parser2 = Parser({"10;"});
   AST ast2 = parser2.parseProgram();
-  // assert(ast1.size() == 1);
-  // assert(parser1.getErrors().empty());
-  // assert(ast1.getStatement(0)->toString() == "x");
+  Parser parser3 = Parser({"10;x;"});
+  AST ast3 = parser3.parseProgram();
+  assert(ast1.size() == 1);
+  assert(parser1.getErrors().empty());
+  assert(ast1.getStatement(0)->toString() == "x");
   assert(ast2.size() == 1);
   assert(parser2.getErrors().empty());
   assert(ast2.getStatement(0)->toString() == "10");
+  assert(ast3.size() == 2);
+  assert(parser3.getErrors().empty());
+  assert(ast3.getStatement(0)->toString() == "10");
+  assert(ast3.getStatement(1)->toString() == "x");
 
   std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
 
 void ParserTest::run() {
-  // testParsingCorrectLetStatement();
-  // testParsingInCorrectLetStatement();
-  // testParsingCorrectReturnStatement();
-  // testParsingInCorrectReturnStatement();
+  testParsingCorrectLetStatement();
+  testParsingInCorrectLetStatement();
+  testParsingCorrectReturnStatement();
+  testParsingInCorrectReturnStatement();
   testStandAloneRValueIdentifiers();
 }

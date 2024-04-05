@@ -2,6 +2,7 @@
 #define __PARSER_HPP__
 
 #include "../ast/Expressions/IExpression.hpp"
+#include "../ast/Expressions/IntegerLiteral/IntegerLiteral.hpp"
 #include "../ast/Expressions/RValueIdentifier/RValueIdentifier.hpp"
 #include "../ast/Statements/LetStatment/LetStatement.hpp"
 #include "../ast/Statements/ReturnStatement/ReturnStatement.hpp"
@@ -28,7 +29,7 @@ private:
   ReturnStatement *parseReturnStatement();
   StandAloneStatement *parseStandAloneStatement(Precedence precedence);
   RValueIdentifier *parseRvalueIdentifier();
-
+  IntegerLiteral *parseIntegerLiteral();
   void nextToken();
   void addError(std::string errorMessage);
   std::vector<std::string> errors;

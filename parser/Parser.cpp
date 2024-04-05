@@ -14,7 +14,7 @@ Parser::Parser(Lexer lexer) : lexer(lexer) {
     return this->parseRvalueIdentifier();
   };
   this->prefixParser[TokenType::INT] = [this]() -> IExpression * {
-    return this->parseRvalueIdentifier();
+    return this->parseIntegerLiteral();
   };
 }
 
@@ -113,11 +113,21 @@ StandAloneStatement *Parser::parseStandAloneStatement(Precedence precedence) {
 }
 
 RValueIdentifier *Parser::parseRvalueIdentifier() {
-  if (this->currentToken.tokenType != TokenType::IDENTIFIER &&
-      this->currentToken.tokenType != TokenType::INT) {
+  if (this->currentToken.tokenType != TokenType::IDENTIFIER) {
     return nullptr;
   }
-  return new RValueIdentifier(this->currentToken,
-                              this->currentToken.literalValue);
+  RValueIdentifier *rvalue =
+      new RValueIdentifier(this->currentToken, this->currentToken.literalValue);
   this->nextToken();
+  return rvalue;
+}
+
+IntegerLiteral *Parser::parseIntegerLiteral() {
+  if (this->currentToken.tokenType != TokenType::INT) {
+    return nullptr;
+  }
+  IntegerLiteral *integerLiteral =
+      new IntegerLiteral(this->currentToken.literalValue);
+  this->nextToken();
+  return integerLiteral;
 }
