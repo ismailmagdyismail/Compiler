@@ -2,6 +2,10 @@
 #define __PARSER_HPP__
 
 #include "../ast/Expressions/IExpression.hpp"
+#include "../ast/Expressions/RValueIdentifier/RValueIdentifier.hpp"
+#include "../ast/Statements/LetStatment/LetStatement.hpp"
+#include "../ast/Statements/ReturnStatement/ReturnStatement.hpp"
+#include "../ast/Statements/StandAloneStatement/StandAloneStatement.hpp"
 #include "../ast/programAST/AST.hpp"
 #include "../lexer/lexer.hpp"
 #include <functional>
@@ -17,10 +21,10 @@ public:
 
 private:
   IStatement *parseStatement();
-  IStatement *parseLetStatement();
-  IStatement *parseReturnStatement();
-  IStatement *parseStandAloneStatement();
-  IExpression *parseRvalueIdentifier();
+  LetStatement *parseLetStatement();
+  ReturnStatement *parseReturnStatement();
+  StandAloneStatement *parseStandAloneStatement();
+  RValueIdentifier *parseRvalueIdentifier();
   std::unordered_map<TokenType, std::function<IExpression *()>> infixParsers;
   std::unordered_map<TokenType, std::function<IExpression *()>> prefixParser;
 

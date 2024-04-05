@@ -3,7 +3,6 @@
 #include "../ast/Expressions/RValueIdentifier/RValueIdentifier.hpp"
 #include "../ast/Statements/LetStatment/LetStatement.hpp"
 #include "../ast/Statements/ReturnStatement/ReturnStatement.hpp"
-#include "./exceptions/ParserError.hpp"
 #include "functional"
 #include <vector>
 
@@ -44,7 +43,7 @@ IStatement *Parser::parseStatement() {
   return parseStandAloneStatement();
 }
 
-IStatement *Parser::parseLetStatement() {
+LetStatement *Parser::parseLetStatement() {
   // TODO add parsing expression later , when
   // expression parser is add
   if (this->currentToken.tokenType != TokenType::LET) {
@@ -81,7 +80,7 @@ IStatement *Parser::parseLetStatement() {
   return new LetStatement(lValueIdentifier, expression);
 }
 
-IStatement *Parser::parseReturnStatement() {
+ReturnStatement *Parser::parseReturnStatement() {
   if (this->currentToken.tokenType != TokenType::RETURN) {
     this->addError("Invalid return statement");
     return nullptr;
@@ -96,6 +95,6 @@ IStatement *Parser::parseReturnStatement() {
       this->currentToken, this->currentToken.literalValue));
 }
 
-IStatement *Parser::parseStandAloneStatement() { return nullptr; }
+StandAloneStatement *Parser::parseStandAloneStatement() { return nullptr; }
 
-IExpression *Parser::parseRvalueIdentifier() {}
+RValueIdentifier *Parser::parseRvalueIdentifier() {}
