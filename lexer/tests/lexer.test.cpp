@@ -1,6 +1,7 @@
 #include "../lexer.hpp"
 #include "./lexer.test.hpp"
 #include "cassert"
+#include <cassert>
 #include <iostream>
 
 void testOnlyKeyWords() {
@@ -123,6 +124,13 @@ void testingNumbers() {
   assert(lexer2.nextToken().tokenType == TokenType::INT);
   assert(lexer2.nextToken().tokenType == TokenType::SEMI_COLON);
   assert(lexer2.nextToken().tokenType == TokenType::END_OF_FILE);
+
+  code = "10;";
+  std::cout << "Testing " << code << '\n';
+  Lexer lexer3(code);
+  assert(lexer3.nextToken().tokenType == TokenType::INT);
+  assert(lexer3.nextToken().tokenType == TokenType::SEMI_COLON);
+  assert(lexer3.nextToken().tokenType == TokenType::END_OF_FILE);
   std::cout << ">>> Lexer anaylisis done sucessfully , test passed ...\n";
 }
 
@@ -344,6 +352,7 @@ void testReading() {
     std::cout << lexer.nextToken().literalValue << '\n';
   }
 }
+
 void LexerTest::run() {
   testOnlyKeyWords();
   testKeyWordsAndIdentifiers();
@@ -352,5 +361,6 @@ void LexerTest::run() {
   testSpaces();
   testingNoSpacesBetweenKeywords();
   tesingMuiltpleCharactersKeyWords();
+  testingNumbers();
   // testReading();
 }
