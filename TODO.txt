@@ -1,1 +1,0 @@
-1- make the tokens a class , maybe an interface to avoid swithc statements when getting token Literal , etc..
