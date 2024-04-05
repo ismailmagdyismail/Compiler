@@ -1,45 +1,62 @@
 #include "./ast.test.hpp"
 #include "../Expressions/DummyExpression.hpp"
+#include "../Expressions/ExpressionStatement/ExpressionStatement.hpp"
 #include "../Expressions/IExpression.hpp"
 #include "../Expressions/RValueIdentifier/RValueIdentifier.hpp"
 #include "../Statements/IStatement.hpp"
 #include "../Statements/LValueIdentifier/LValueIdentifier.hpp"
 #include "../Statements/LetStatment/LetStatement.hpp"
+#include "../Statements/StandAloneStatement/StandAloneStatement.hpp"
+#include <cassert>
 #include <iostream>
 
-/*
-    - Test Virtual destrcutors for all Node Types of the tree to make sure there
-   is no memory leak
-    - This have to be tested manually , verify console logs against desired
-   output
-*/
-void testStatementNodes() {
-  std::cout << "Testing StatmentNodes ....\n";
-  IASTNode *statementPointer =
-      new LetStatement({TokenActions::createToken("x")}, new DummyExpression());
-  delete statementPointer;
-  std::cout << "Done Testing StatmentNodes sucessfully ....\n";
+void testRValueIdentifier() {
+  std::cout << "Testing RValueIdentifiers ....\n";
+  RValueIdentifier r1(TokenActions::createToken("10"), "10");
+  RValueIdentifier r2(TokenActions::createToken("x"), "x");
+  assert(r1.toString() == "10");
+  assert(r2.toString() == "x");
+  std::cout << "Done Testing RValueIdentifiers sucessfully ....\n";
 }
 
-void testExpressionNodes() {
-  std::cout << "Testing ExpressionNodes ....\n";
-  IASTNode *expressionPointer = new DummyExpression();
-  delete expressionPointer;
-  std::cout << "Done Testing ExpressionNodes sucessfully ....\n";
+void testLValueIdentifier() {
+  std::cout << "Testing LValueIdentifiers ....\n";
+  LValueIdentifier l1(TokenActions::createToken("x"));
+  assert(l1.toString() == "x");
+  std::cout << "Done Testing LValueIdentifiers sucessfully ....\n";
 }
 
-void testIdentifierNodes() {
-  std::cout << "Testing IdentifierNodes ....\n";
-  IStatement *lValue = new LValueIdentifier(TokenActions::createToken("-1"));
-  IExpression *rValue =
-      new RValueIdentifier(TokenActions::createToken("-1"), "-1");
-  delete lValue;
-  delete rValue;
-  std::cout << "Done Testing IdentifierNodes sucessfully ....\n";
+void testLetStatement() {
+  std::cout << "Testing LetStatement ....\n";
+  LetStatement let1(
+      {TokenActions::createToken("x")},
+      new RValueIdentifier(TokenActions::createToken("10"), "10"));
+  LetStatement let2({TokenActions::createToken("x")},
+                    new RValueIdentifier(TokenActions::createToken("y"), "y"));
+  assert(let1.toString() == "let x = 10");
+  assert(let2.toString() == "let x = y");
+  std::cout << "Done Testing LetStatement sucessfully ....\n";
+}
+
+void testStandAloneStatement() {
+  // TODO
+  std::cout << "Testing StandAloneStatements ....\n";
+  // StandAloneStatement standAloneStatement();
+  std::cout << "Done Testing StandAloneStatements sucessfully ....\n";
+}
+
+void testExpressionStatement() {
+  // TODO
+  // x = 10;
+  std::cout << "Testing StandAloneStatements ....\n";
+  // ExpressionStatement expressionStatement();
+  std::cout << "Done Testing StandAloneStatements sucessfully ....\n";
 }
 
 void AstTest::run() {
-  testStatementNodes();
-  testExpressionNodes();
-  testIdentifierNodes();
+  testLetStatement();
+  testLValueIdentifier();
+  testStandAloneStatement();
+  testRValueIdentifier();
+  testExpressionStatement();
 }

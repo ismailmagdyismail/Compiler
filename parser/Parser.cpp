@@ -4,9 +4,15 @@
 #include "../ast/Statements/LetStatment/LetStatement.hpp"
 #include "../ast/Statements/ReturnStatement/ReturnStatement.hpp"
 #include "./exceptions/ParserError.hpp"
+#include "functional"
 #include <vector>
 
-Parser::Parser(Lexer lexer) : lexer(lexer) { this->nextToken(); }
+Parser::Parser(Lexer lexer) : lexer(lexer) {
+  this->nextToken();
+  this->prefixParser[TokenType::IDENTIFIER] = [this]() -> IExpression * {
+    return this->parseRvalueIdentifier();
+  };
+}
 
 void Parser::nextToken() { currentToken = lexer.nextToken(); }
 
@@ -33,9 +39,9 @@ IStatement *Parser::parseStatement() {
     return this->parseLetStatement();
   }
   if (this->currentToken.tokenType == TokenType::RETURN) {
-    return this->parseReturnExpression();
+    return this->parseReturnStatement();
   }
-  return nullptr;
+  return parseStandAloneStatement();
 }
 
 IStatement *Parser::parseLetStatement() {
@@ -75,7 +81,7 @@ IStatement *Parser::parseLetStatement() {
   return new LetStatement(lValueIdentifier, expression);
 }
 
-IStatement *Parser::parseReturnExpression() {
+IStatement *Parser::parseReturnStatement() {
   if (this->currentToken.tokenType != TokenType::RETURN) {
     this->addError("Invalid return statement");
     return nullptr;
@@ -89,3 +95,7 @@ IStatement *Parser::parseReturnExpression() {
   return new ReturnStatement(new RValueIdentifier(
       this->currentToken, this->currentToken.literalValue));
 }
+
+IStatement *Parser::parseStandAloneStatement() { return nullptr; }
+
+IExpression *Parser::parseRvalueIdentifier() {}

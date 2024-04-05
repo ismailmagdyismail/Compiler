@@ -1,9 +1,12 @@
 #ifndef __PARSER_HPP__
 #define __PARSER_HPP__
 
+#include "../ast/Expressions/IExpression.hpp"
 #include "../ast/programAST/AST.hpp"
 #include "../lexer/lexer.hpp"
+#include <functional>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 class Parser {
@@ -15,7 +18,12 @@ public:
 private:
   IStatement *parseStatement();
   IStatement *parseLetStatement();
-  IStatement *parseReturnExpression();
+  IStatement *parseReturnStatement();
+  IStatement *parseStandAloneStatement();
+  IExpression *parseRvalueIdentifier();
+  std::unordered_map<TokenType, std::function<IExpression *()>> infixParsers;
+  std::unordered_map<TokenType, std::function<IExpression *()>> prefixParser;
+
   void nextToken();
   void addError(std::string errorMessage);
   std::vector<std::string> errors;

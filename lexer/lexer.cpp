@@ -73,7 +73,7 @@ std::string filterSourceCode(std::string sourceCode) {
   }
   int end = 0;
   for (int i = sourceCode.size() - 1; i >= 0; i--) {
-    if (sourceCode[i] != ' ' || sourceCode[i] != '\n') {
+    if (sourceCode[i] != ' ' && sourceCode[i] != '\n') {
       end = i;
       break;
     }
