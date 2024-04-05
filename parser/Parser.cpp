@@ -6,6 +6,7 @@
 #include "Precedence.hpp"
 #include "functional"
 #include <iostream>
+#include <string>
 #include <vector>
 
 Parser::Parser(Lexer lexer) : lexer(lexer) {
@@ -114,6 +115,7 @@ StandAloneStatement *Parser::parseStandAloneStatement(Precedence precedence) {
 
 RValueIdentifier *Parser::parseRvalueIdentifier() {
   if (this->currentToken.tokenType != TokenType::IDENTIFIER) {
+    this->addError("Not a valid Identifier");
     return nullptr;
   }
   RValueIdentifier *rvalue =
@@ -124,10 +126,11 @@ RValueIdentifier *Parser::parseRvalueIdentifier() {
 
 IntegerLiteral *Parser::parseIntegerLiteral() {
   if (this->currentToken.tokenType != TokenType::INT) {
+    this->addError("Not a valid Integer");
     return nullptr;
   }
   IntegerLiteral *integerLiteral =
-      new IntegerLiteral(this->currentToken.literalValue);
+      new IntegerLiteral(std::stol(this->currentToken.literalValue));
   this->nextToken();
   return integerLiteral;
 }

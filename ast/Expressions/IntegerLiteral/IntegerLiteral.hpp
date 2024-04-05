@@ -7,7 +7,6 @@
 class IntegerLiteral : public IExpression {
 public:
   IntegerLiteral(long long value);
-  IntegerLiteral(std::string value);
 
   virtual IExpression *clone() override;
   virtual std::string toString() override;

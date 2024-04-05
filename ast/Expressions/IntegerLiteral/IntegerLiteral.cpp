@@ -6,11 +6,6 @@ IntegerLiteral::IntegerLiteral(long long value) {
   this->value = value;
 }
 
-IntegerLiteral::IntegerLiteral(std::string value) {
-  this->token = TokenActions::createToken(value);
-  this->value = std::stol(value);
-}
-
 IExpression *IntegerLiteral::clone() { return new IntegerLiteral(this->value); }
 
 long long IntegerLiteral::getIntegerValue() { return this->value; }
