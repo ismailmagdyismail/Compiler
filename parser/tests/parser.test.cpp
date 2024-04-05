@@ -58,8 +58,22 @@ void testParsingInCorrectReturnStatement() {
   assert(parser.getErrors().size() == 1);
   std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
+
+void testStandAloneRValueIdentifiers() {
+  std::cout << ">>> Parser tesing, testing StandAloneRValueIdentifiers parsing "
+               ".....\n";
+  Parser parser = Parser({"x"});
+  AST ast = parser.parseProgram();
+  assert(ast.size() == 1);
+  assert(parser.getErrors().empty());
+  assert(ast.getStatement(0)->toString() == "x");
+  std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
+}
+
 void ParserTest::run() {
   testParsingCorrectLetStatement();
   testParsingInCorrectLetStatement();
   testParsingCorrectReturnStatement();
+  testParsingInCorrectReturnStatement();
+  testStandAloneRValueIdentifiers();
 }

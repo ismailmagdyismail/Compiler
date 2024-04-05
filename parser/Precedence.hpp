@@ -4,6 +4,7 @@
 enum precedence {
   LOWEST,
   EQUALS,
+  LESS_GREATER,
   SUM,
   PRODUCT,
   PREFIX,

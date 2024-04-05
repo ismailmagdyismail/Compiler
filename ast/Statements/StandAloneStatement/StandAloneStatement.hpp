@@ -6,7 +6,7 @@
 
 class StandAloneStatement : public IStatement {
 public:
-  StandAloneStatement(ExpressionStatement expression);
+  StandAloneStatement(IExpression *expression);
   StandAloneStatement(const StandAloneStatement &other);
   StandAloneStatement &operator=(const StandAloneStatement &other);
 
@@ -17,7 +17,7 @@ public:
   virtual IStatement *clone() override;
 
 private:
-  ExpressionStatement expressionStatement;
+  IExpression *expressionStatement;
 };
 
 #endif

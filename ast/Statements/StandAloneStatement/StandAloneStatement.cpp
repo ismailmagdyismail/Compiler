@@ -1,6 +1,6 @@
 #include "./StandAloneStatement.hpp"
 
-StandAloneStatement::StandAloneStatement(ExpressionStatement expression)
+StandAloneStatement::StandAloneStatement(IExpression *expression)
     : expressionStatement(expression) {}
 
 StandAloneStatement::StandAloneStatement(const StandAloneStatement &other)
@@ -13,19 +13,19 @@ StandAloneStatement::operator=(const StandAloneStatement &other) {
 }
 
 std::string StandAloneStatement::getNodeType() {
-  return this->expressionStatement.getNodeType();
+  return this->expressionStatement->getNodeType();
 }
 
 std::string StandAloneStatement::getTokenLiteral() {
-  return this->expressionStatement.getTokenLiteral();
+  return this->expressionStatement->getTokenLiteral();
 }
 
 std::string StandAloneStatement::getExpressionValue() {
-  return this->expressionStatement.getValueLiteral();
+  return this->expressionStatement->getValueLiteral();
 }
 
 std::string StandAloneStatement::toString() {
-  return this->expressionStatement.toString();
+  return this->expressionStatement->toString();
 }
 
 IStatement *StandAloneStatement::clone() {

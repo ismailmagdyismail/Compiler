@@ -4,6 +4,7 @@
 #include "../ast/Statements/LetStatment/LetStatement.hpp"
 #include "../ast/Statements/ReturnStatement/ReturnStatement.hpp"
 #include "functional"
+#include <iostream>
 #include <vector>
 
 Parser::Parser(Lexer lexer) : lexer(lexer) {
@@ -40,7 +41,7 @@ IStatement *Parser::parseStatement() {
   if (this->currentToken.tokenType == TokenType::RETURN) {
     return this->parseReturnStatement();
   }
-  return parseStandAloneStatement();
+  return this->parseStandAloneStatement();
 }
 
 LetStatement *Parser::parseLetStatement() {
@@ -63,7 +64,6 @@ LetStatement *Parser::parseLetStatement() {
     this->addError("Missing " +
                    TokenActions::getTokenLiteralValue(TokenType::ASSIGN) +
                    " (assignment) Sign");
-
     return nullptr;
   }
 
@@ -77,6 +77,7 @@ LetStatement *Parser::parseLetStatement() {
   LValueIdentifier lValueIdentifier = LValueIdentifier(identifierToken);
   IExpression *expression =
       new RValueIdentifier(rValueToken, rValueToken.literalValue);
+  this->nextToken();
   return new LetStatement(lValueIdentifier, expression);
 }
 
@@ -91,10 +92,28 @@ ReturnStatement *Parser::parseReturnStatement() {
     this->addError("Invalid return value ");
     return nullptr;
   }
-  return new ReturnStatement(new RValueIdentifier(
-      this->currentToken, this->currentToken.literalValue));
+  Token returnToken = this->currentToken;
+  this->nextToken();
+  return new ReturnStatement(
+      new RValueIdentifier(returnToken, returnToken.literalValue));
 }
 
-StandAloneStatement *Parser::parseStandAloneStatement() { return nullptr; }
+StandAloneStatement *Parser::parseStandAloneStatement() {
+  Token token = this->currentToken;
+  auto prefixParser = this->prefixParser[token.tokenType];
+  if (prefixParser == nullptr) {
+    return nullptr;
+  }
+  IExpression *expression = prefixParser();
+  return new StandAloneStatement(expression);
+}
 
-RValueIdentifier *Parser::parseRvalueIdentifier() {}
+RValueIdentifier *Parser::parseRvalueIdentifier() {
+  if (this->currentToken.tokenType != TokenType::IDENTIFIER &&
+      this->currentToken.tokenType != TokenType::INT) {
+    return nullptr;
+  }
+  return new RValueIdentifier(this->currentToken,
+                              this->currentToken.literalValue);
+  this->nextToken();
+}

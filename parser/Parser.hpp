@@ -18,6 +18,8 @@ public:
   Parser(Lexer lexer);
   AST parseProgram();
   std::vector<std::string> getErrors();
+  std::unordered_map<TokenType, std::function<IExpression *()>> infixParsers;
+  std::unordered_map<TokenType, std::function<IExpression *()>> prefixParser;
 
 private:
   IStatement *parseStatement();
@@ -25,8 +27,6 @@ private:
   ReturnStatement *parseReturnStatement();
   StandAloneStatement *parseStandAloneStatement();
   RValueIdentifier *parseRvalueIdentifier();
-  std::unordered_map<TokenType, std::function<IExpression *()>> infixParsers;
-  std::unordered_map<TokenType, std::function<IExpression *()>> prefixParser;
 
   void nextToken();
   void addError(std::string errorMessage);
