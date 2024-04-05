@@ -3,6 +3,7 @@
 #include "../Parser.hpp"
 #include "../exceptions/ParserError.hpp"
 #include <cassert>
+#include <cmath>
 #include <iostream>
 
 void testParsingCorrectLetStatement() {
@@ -82,10 +83,23 @@ void testStandAloneRValueIdentifiers() {
   std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
 
+void testPrefixOperators() {
+  std::cout
+      << ">>> Parser tesing, testing InCorrect RETURN Statment parsing .....\n";
+  Parser parser = Parser({"!10;-10 "});
+  AST ast = parser.parseProgram();
+  assert(ast.size() == 2);
+  assert(parser.getErrors().empty());
+  assert(ast.getStatement(0)->toString() == "!10");
+  assert(ast.getStatement(1)->toString() == "-10");
+  std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
+}
+
 void ParserTest::run() {
   testParsingCorrectLetStatement();
   testParsingInCorrectLetStatement();
   testParsingCorrectReturnStatement();
   testParsingInCorrectReturnStatement();
   testStandAloneRValueIdentifiers();
+  testPrefixOperators();
 }

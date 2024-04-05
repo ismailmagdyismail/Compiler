@@ -3,6 +3,7 @@
 
 #include "../ast/Expressions/IExpression.hpp"
 #include "../ast/Expressions/IntegerLiteral/IntegerLiteral.hpp"
+#include "../ast/Expressions/PrefixExpression/PrefixExpression.hpp"
 #include "../ast/Expressions/RValueIdentifier/RValueIdentifier.hpp"
 #include "../ast/Statements/LetStatment/LetStatement.hpp"
 #include "../ast/Statements/ReturnStatement/ReturnStatement.hpp"
@@ -30,6 +31,7 @@ private:
   StandAloneStatement *parseStandAloneStatement(Precedence precedence);
   RValueIdentifier *parseRvalueIdentifier();
   IntegerLiteral *parseIntegerLiteral();
+  PrefixExpression *parsePrefixOperator();
   void nextToken();
   void addError(std::string errorMessage);
   std::vector<std::string> errors;

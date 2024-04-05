@@ -17,6 +17,12 @@ Parser::Parser(Lexer lexer) : lexer(lexer) {
   this->prefixParser[TokenType::INT] = [this]() -> IExpression * {
     return this->parseIntegerLiteral();
   };
+  this->prefixParser[TokenType::BANG] = [this]() -> IExpression * {
+    return this->parsePrefixOperator();
+  };
+  this->prefixParser[TokenType::MINUS] = [this]() -> IExpression * {
+    return this->parsePrefixOperator();
+  };
 }
 
 void Parser::nextToken() { currentToken = lexer.nextToken(); }
@@ -75,6 +81,7 @@ LetStatement *Parser::parseLetStatement() {
   this->nextToken();
   if (this->currentToken.tokenType != TokenType::INT &&
       this->currentToken.tokenType != TokenType::IDENTIFIER) {
+    // TODO parse RValue expression
     this->addError("Invalid RValue");
     return nullptr;
   }
@@ -94,6 +101,7 @@ ReturnStatement *Parser::parseReturnStatement() {
   this->nextToken();
   if (this->currentToken.tokenType != TokenType::IDENTIFIER &&
       this->currentToken.tokenType != TokenType::INT) {
+    // TODO parse Return expression
     this->addError("Invalid return value ");
     return nullptr;
   }
@@ -133,4 +141,18 @@ IntegerLiteral *Parser::parseIntegerLiteral() {
       new IntegerLiteral(std::stol(this->currentToken.literalValue));
   this->nextToken();
   return integerLiteral;
+}
+
+PrefixExpression *Parser::parsePrefixOperator() {
+  if (this->currentToken.tokenType != TokenType::BANG &&
+      this->currentToken.tokenType != TokenType::MINUS) {
+    this->addError("Not a valid Prefix Operator");
+    return nullptr;
+  }
+  Token prefixOperator = this->currentToken;
+  this->nextToken();
+  IExpression *rightExpression = new IntegerLiteral(std::stol(
+      this->currentToken.literalValue)); // TODO parse right expression
+  this->nextToken();
+  return new PrefixExpression(prefixOperator, rightExpression);
 }
