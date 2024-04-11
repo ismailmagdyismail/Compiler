@@ -11,6 +11,14 @@ PrefixExpression::PrefixExpression(const PrefixExpression &other) {
   this->rightExpression = other.rightExpression->clone();
 }
 
+void PrefixExpression::setPrefixOperator(Token prefixOperator) {
+  this->prefixOperator = prefixOperator;
+}
+
+void PrefixExpression::setRightExpression(IExpression *rightExpression) {
+  this->rightExpression = rightExpression;
+}
+
 std::string PrefixExpression::toString() {
   return this->prefixOperator.literalValue + this->rightExpression->toString();
 }

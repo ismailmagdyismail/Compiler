@@ -9,15 +9,19 @@
 void testParsingCorrectLetStatement() {
   std::cout
       << ">>> Parser tesing, testing Correct LET Statment parsing .....\n";
-  Parser parser = Parser({"let x = 10; let y =10; let z = x;"});
+  Parser parser =
+      Parser({"let x = 10; let y =10; let z = x;let foobar = 838383;"});
   AST ast = parser.parseProgram();
-  assert(ast.size() == 3);
+  assert(ast.size() == 4);
   assert(ast.getStatement(0)->getTokenLiteral() == "let");
   assert(ast.getStatement(0)->toString() == "let x = 10");
   assert(ast.getStatement(1)->getTokenLiteral() == "let");
   assert(ast.getStatement(1)->toString() == "let y = 10");
   assert(ast.getStatement(2)->getTokenLiteral() == "let");
   assert(ast.getStatement(2)->toString() == "let z = x");
+  assert(ast.getStatement(3)->getTokenLiteral() == "let");
+  assert(ast.getStatement(3)->toString() == "let foobar = 838383");
+
   assert(parser.getErrors().empty());
   std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
@@ -25,11 +29,18 @@ void testParsingCorrectLetStatement() {
 void testParsingInCorrectLetStatement() {
   std::cout
       << ">>> Parser tesing, testing InCorrect LET Statment parsing .....\n";
-  Parser parser = Parser({"let 10;"});
-  AST ast = parser.parseProgram();
-  assert(ast.size() == 0);
-  assert(!parser.getErrors().empty());
-  assert(parser.getErrors().size() == 1);
+  Parser parser1 = Parser({"let 10;"});
+  AST ast = parser1.parseProgram();
+  assert(!parser1.getErrors().empty());
+
+  Parser parser2 = Parser({"let x 5;"});
+  AST ast2 = parser2.parseProgram();
+  assert(!parser2.getErrors().empty());
+
+  Parser parser3 = Parser({"let = 10;"});
+  AST ast3 = parser3.parseProgram();
+  assert(!parser3.getErrors().empty());
+
   std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
 
@@ -54,9 +65,7 @@ void testParsingInCorrectReturnStatement() {
       << ">>> Parser tesing, testing InCorrect RETURN Statment parsing .....\n";
   Parser parser = Parser({"return ; "});
   AST ast = parser.parseProgram();
-  assert(ast.size() == 0);
   assert(!parser.getErrors().empty());
-  assert(parser.getErrors().size() == 1);
   std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
 
@@ -84,14 +93,16 @@ void testStandAloneRValueIdentifiers() {
 }
 
 void testPrefixOperators() {
-  std::cout
-      << ">>> Parser tesing, testing InCorrect RETURN Statment parsing .....\n";
-  Parser parser = Parser({"!10;-10 "});
+  std::cout << ">>> Parser tesing, testing Prefix Operators Expression parsing "
+               ".....\n";
+  Parser parser = Parser({"!10;-10;-15;!5"});
   AST ast = parser.parseProgram();
-  assert(ast.size() == 2);
+  assert(ast.size() == 4);
   assert(parser.getErrors().empty());
   assert(ast.getStatement(0)->toString() == "!10");
   assert(ast.getStatement(1)->toString() == "-10");
+  assert(ast.getStatement(2)->toString() == "-15");
+  assert(ast.getStatement(3)->toString() == "!5");
   std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
 

@@ -1,33 +1,46 @@
 #include "./StandAloneStatement.hpp"
 
-StandAloneStatement::StandAloneStatement(IExpression *expression)
-    : expressionStatement(expression) {}
+StandAloneStatement::StandAloneStatement(Token token, IExpression *expression) {
+  this->token = token;
+  this->expression = expression;
+}
 
-StandAloneStatement::StandAloneStatement(const StandAloneStatement &other)
-    : expressionStatement(other.expressionStatement) {}
+StandAloneStatement::StandAloneStatement(const StandAloneStatement &other) {
+  this->token = other.token;
+  this->expression = other.expression->clone();
+}
 
 StandAloneStatement &
 StandAloneStatement::operator=(const StandAloneStatement &other) {
-  this->expressionStatement = other.expressionStatement;
+  this->expression = other.expression->clone();
+  this->token = other.token;
   return *this;
 }
 
+void StandAloneStatement::setExpression(IExpression *expression) {
+  this->expression = expression;
+}
+
+void StandAloneStatement::setToken(Token token) { this->token = token; }
+
 std::string StandAloneStatement::getNodeType() {
-  return this->expressionStatement->getNodeType();
+  return this->expression->getNodeType();
 }
 
 std::string StandAloneStatement::getTokenLiteral() {
-  return this->expressionStatement->getTokenLiteral();
+  return this->expression->getTokenLiteral();
 }
 
 std::string StandAloneStatement::getExpressionValue() {
-  return this->expressionStatement->getValueLiteral();
+  return this->expression->getValueLiteral();
 }
 
 std::string StandAloneStatement::toString() {
-  return this->expressionStatement->toString();
+  return this->expression->toString();
 }
 
 IStatement *StandAloneStatement::clone() {
-  return new StandAloneStatement(this->expressionStatement);
+  return new StandAloneStatement(*this);
 }
+
+StandAloneStatement::~StandAloneStatement() { delete this->expression; }

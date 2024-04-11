@@ -1,6 +1,7 @@
 #ifndef __PARSER_HPP__
 #define __PARSER_HPP__
 
+#include "../ast/Expressions/BinaryExpression/BinaryExpression.hpp"
 #include "../ast/Expressions/IExpression.hpp"
 #include "../ast/Expressions/IntegerLiteral/IntegerLiteral.hpp"
 #include "../ast/Expressions/PrefixExpression/PrefixExpression.hpp"
@@ -10,7 +11,7 @@
 #include "../ast/Statements/StandAloneStatement/StandAloneStatement.hpp"
 #include "../ast/programAST/AST.hpp"
 #include "../lexer/lexer.hpp"
-#include "Precedence.hpp"
+#include "Precedence/Precedence.hpp"
 #include <functional>
 #include <string>
 #include <unordered_map>
@@ -28,15 +29,18 @@ private:
   IStatement *parseStatement();
   LetStatement *parseLetStatement();
   ReturnStatement *parseReturnStatement();
-  StandAloneStatement *parseStandAloneStatement(Precedence precedence);
-  RValueIdentifier *parseRvalueIdentifier();
-  IntegerLiteral *parseIntegerLiteral();
+  IExpression *parseExpression(Precedence precedence);
+  StandAloneStatement *parseStandAloneStatement();
+  RValueIdentifier *createRvalueIdentifier();
+  IntegerLiteral *createIntegerLiteral();
   PrefixExpression *parsePrefixOperator();
+  BinaryExpression *parseBinaryExpression();
   void nextToken();
   void addError(std::string errorMessage);
   std::vector<std::string> errors;
   Lexer lexer;
   Token currentToken;
+  Token peekToken;
 };
 
 #endif
