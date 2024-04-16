@@ -1,5 +1,12 @@
 #include "Precedence.hpp"
 
-// Precedence TokensPrecedence::getTokenPrecedence(TokenType token) {
-//   return tokensPrecedence[token];
-// }
+std::map<TokenType, Precedence> tokensPrecedence = {
+    {TokenType::PLUS, SUM},         {TokenType::MINUS, SUM},
+    {TokenType::ASTERISK, PRODUCT}, {TokenType::SLASH, PRODUCT},
+    {TokenType::LT, LESS_GREATER},  {TokenType::GT, LESS_GREATER},
+    {TokenType::EQUAL, EQUALS},     {TokenType::NOT_EQUAL, NOT_EQUAL},
+};
+
+Precedence TokensPrecedence::getTokenPrecedence(TokenType token) {
+  return tokensPrecedence[token];
+}

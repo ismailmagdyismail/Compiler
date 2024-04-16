@@ -4,6 +4,7 @@
 #include "../exceptions/ParserError.hpp"
 #include <cassert>
 #include <cmath>
+#include <cstddef>
 #include <iostream>
 
 void testParsingCorrectLetStatement() {
@@ -106,6 +107,31 @@ void testPrefixOperators() {
   std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
 
+void testBinaryOperators() {
+  std::cout << ">>> Parser tesing, testing Binary Expression parsing "
+               ".....\n";
+  Parser parser = Parser({"-a*b;!-a;a+b+c;a*b*c;a*b/c;a+b/c;a+b*c+d/e-f;5 > 4 "
+                          "== 3 < 4;5<4!=3>4; 3 + 4 * 5 == 3 * 1 + 4 * 5;3 + 4 "
+                          "* 5 == 3 * 1 + 4 * 5"});
+  AST ast = parser.parseProgram();
+
+  assert(ast.size() == 11);
+  assert(parser.getErrors().empty());
+  assert(ast.getStatement(0)->toString() == "-a*b");
+  assert(ast.getStatement(1)->toString() == "!-a");
+  assert(ast.getStatement(2)->toString() == "a+b+c");
+  assert(ast.getStatement(3)->toString() == "a*b*c");
+  assert(ast.getStatement(4)->toString() == "a*b/c");
+  assert(ast.getStatement(5)->toString() == "a+b/c");
+  assert(ast.getStatement(6)->toString() == "a+b*c+d/e-f");
+  assert(ast.getStatement(7)->toString() == "5>4==3<4");
+  assert(ast.getStatement(8)->toString() == "5<4!=3>4");
+  assert(ast.getStatement(9)->toString() == "3+4*5==3*1+4*5");
+  assert(ast.getStatement(10)->toString() == "3+4*5==3*1+4*5");
+
+  std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
+}
+
 void ParserTest::run() {
   testParsingCorrectLetStatement();
   testParsingInCorrectLetStatement();
@@ -113,4 +139,5 @@ void ParserTest::run() {
   testParsingInCorrectReturnStatement();
   testStandAloneRValueIdentifiers();
   testPrefixOperators();
+  testBinaryOperators();
 }

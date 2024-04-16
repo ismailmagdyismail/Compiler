@@ -21,7 +21,7 @@ public:
   void setExpression(IExpression *expression);
   virtual ~StandAloneStatement();
 
-private:
+public:
   IExpression *expression;
   Token token;
 };

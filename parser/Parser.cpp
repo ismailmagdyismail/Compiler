@@ -13,10 +13,10 @@ Parser::Parser(Lexer lexer) : lexer(lexer) {
   this->nextToken();
   this->nextToken();
   this->prefixParser[TokenType::IDENTIFIER] = [this]() -> IExpression * {
-    return this->createRvalueIdentifier();
+    return this->parseRValueIdentifier();
   };
   this->prefixParser[TokenType::INT] = [this]() -> IExpression * {
-    return this->createIntegerLiteral();
+    return this->parseIntegerLiteral();
   };
   this->prefixParser[TokenType::BANG] = [this]() -> IExpression * {
     return this->parsePrefixOperator();
@@ -24,15 +24,51 @@ Parser::Parser(Lexer lexer) : lexer(lexer) {
   this->prefixParser[TokenType::MINUS] = [this]() -> IExpression * {
     return this->parsePrefixOperator();
   };
-  // this->infixParser[TokenType::PLUS] = [this]() -> IExpression * {
-  //   return this->parseBinaryExpression();
-  // }
+  this->infixParsers[TokenType::PLUS] =
+      [this](IExpression *leftExpression) -> IExpression * {
+    return this->parseBinaryExpression(leftExpression);
+  };
+  this->infixParsers[TokenType::MINUS] =
+      [this](IExpression *leftExpression) -> IExpression * {
+    return this->parseBinaryExpression(leftExpression);
+  };
+  this->infixParsers[TokenType::SLASH] =
+      [this](IExpression *leftExpression) -> IExpression * {
+    return this->parseBinaryExpression(leftExpression);
+  };
+  this->infixParsers[TokenType::ASTERISK] =
+      [this](IExpression *leftExpression) -> IExpression * {
+    return this->parseBinaryExpression(leftExpression);
+  };
+  this->infixParsers[TokenType::EQUAL] =
+      [this](IExpression *leftExpression) -> IExpression * {
+    return this->parseBinaryExpression(leftExpression);
+  };
+  this->infixParsers[TokenType::NOT_EQUAL] =
+      [this](IExpression *leftExpression) -> IExpression * {
+    return this->parseBinaryExpression(leftExpression);
+  };
+  this->infixParsers[TokenType::GT] =
+      [this](IExpression *leftExpression) -> IExpression * {
+    return this->parseBinaryExpression(leftExpression);
+  };
+  this->infixParsers[TokenType::LT] =
+      [this](IExpression *leftExpression) -> IExpression * {
+    return this->parseBinaryExpression(leftExpression);
+  };
 }
 
 void Parser::nextToken() {
   this->currentToken = this->peekToken;
   this->peekToken = lexer.nextToken();
-  // this->currentToken = lexer.nextToken();
+}
+
+Precedence Parser::currentPrecedence() {
+  return TokensPrecedence::getTokenPrecedence(this->currentToken.tokenType);
+}
+
+Precedence Parser::peekPrecedence() {
+  return TokensPrecedence::getTokenPrecedence(this->peekToken.tokenType);
 }
 
 void Parser::addError(std::string errorMessage) {
@@ -122,24 +158,29 @@ StandAloneStatement *Parser::parseStandAloneStatement() {
 }
 
 IExpression *Parser::parseExpression(Precedence precedence) {
-  Token token = this->currentToken;
-  auto prefixParser = this->prefixParser[token.tokenType];
+  auto prefixParser = this->prefixParser[this->currentToken.tokenType];
   if (prefixParser == nullptr) {
     this->addError("No parsing function found for current token" +
                    this->currentToken.literalValue);
     return nullptr;
   }
-  IExpression *leftExpression = prefixParser();
-  return leftExpression;
+  IExpression *expression = prefixParser();
+  while (this->peekToken.tokenType != TokenType::SEMI_COLON &&
+         precedence < this->peekPrecedence()) {
+    auto infixParser = this->infixParsers[this->peekToken.tokenType];
+    this->nextToken();
+    expression = infixParser(expression);
+  }
+  return expression;
 }
 
-RValueIdentifier *Parser::createRvalueIdentifier() {
+RValueIdentifier *Parser::parseRValueIdentifier() {
   RValueIdentifier *rvalue =
       new RValueIdentifier(this->currentToken, this->currentToken.literalValue);
   return rvalue;
 }
 
-IntegerLiteral *Parser::createIntegerLiteral() {
+IntegerLiteral *Parser::parseIntegerLiteral() {
   IntegerLiteral *integerLiteral =
       new IntegerLiteral(std::stol(this->currentToken.literalValue));
   return integerLiteral;
@@ -154,23 +195,13 @@ PrefixExpression *Parser::parsePrefixOperator() {
   return prefixExpression;
 }
 
-BinaryExpression *Parser::parseBinaryExpression() {
-  if (this->currentToken.tokenType != TokenType::INT &&
-      this->currentToken.tokenType != TokenType::IDENTIFIER) {
-    this->addError("Not a valid LeftValue ");
-    return nullptr;
-  }
-  if (this->currentToken.tokenType != TokenType::PLUS) {
-    this->addError(
-        "Token " +
-        TokenActions::getTokenLiteralValue(this->currentToken.tokenType) +
-        "is not a Valid Binary Operator");
-    return nullptr;
-  }
-
-  if (this->currentToken.tokenType != TokenType::INT &&
-      this->currentToken.tokenType != TokenType::IDENTIFIER) {
-    this->addError("Not a valid RightValue ");
-    return nullptr;
-  }
+BinaryExpression *Parser::parseBinaryExpression(IExpression *leftExpression) {
+  BinaryExpression *binaryExpression = new BinaryExpression();
+  binaryExpression->setLeftExpression(leftExpression);
+  binaryExpression->setBinaryOperator(this->currentToken);
+  Precedence precedence = this->currentPrecedence();
+  this->nextToken();
+  IExpression *rightExpression = this->parseExpression(precedence);
+  binaryExpression->setRightExpression(rightExpression);
+  return binaryExpression;
 }

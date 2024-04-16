@@ -14,10 +14,9 @@ enum Precedence {
   PREFIX,
   CALL,
 };
-// std::map<TokenType, Precedence> tokensPrecedence;
 
-// namespace TokensPrecedence {
-// Precedence getTokenPrecedence(TokenType token);
-// }
+namespace TokensPrecedence {
+Precedence getTokenPrecedence(TokenType token);
+}
 
 #endif

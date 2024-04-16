@@ -5,18 +5,21 @@
 #include "../IExpression.hpp"
 #include <string>
 
-class BinaryExpression : IExpression {
+class BinaryExpression : public IExpression {
 public:
+  BinaryExpression();
   BinaryExpression(IExpression *leftExpression, IExpression *righExpression,
                    Token binaryOperator);
   BinaryExpression(const BinaryExpression &other);
-
+  BinaryExpression &operator=(const BinaryExpression &other);
   virtual std::string toString() override;
   virtual std::string getNodeType() override;
   virtual std::string getTokenLiteral() override;
   virtual std::string getValueLiteral() override;
+  void setLeftExpression(IExpression *leftExpression);
+  void setRightExpression(IExpression *rightExpression);
+  void setBinaryOperator(Token token);
   virtual IExpression *clone() override;
-
   virtual ~BinaryExpression();
 
 private:
