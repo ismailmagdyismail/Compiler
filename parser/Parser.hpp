@@ -10,6 +10,7 @@
 #include "../ast/Statements/ReturnStatement/ReturnStatement.hpp"
 #include "../ast/Statements/StandAloneStatement/StandAloneStatement.hpp"
 #include "../ast/Expressions/Booleans/Boolean.hpp"
+#include "../ast/Expressions/If/If.hpp"
 #include "../ast/programAST/AST.hpp"
 #include "../lexer/lexer.hpp"
 #include "Precedence/Precedence.hpp"
@@ -36,6 +37,8 @@ private:
   RValueIdentifier *parseRValueIdentifier();
   IntegerLiteral *parseIntegerLiteral();
   Boolean* parseBoolean();
+  If* parseIfExpression();
+  BlockStatement* parseBlock();
   PrefixExpression *parsePrefixOperator();
   BinaryExpression *parseBinaryExpression(IExpression *leftExpression);
   IExpression* parseGroupedExpression();

@@ -160,6 +160,20 @@ void testGroupedExpressions(){
     std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
 
+void testIfExpression(){
+    std::cout << ">>> Parser tesing, testing Grouped Expressions parsing "
+                 ".....\n";
+    Parser parser = Parser({"if (x < y) { x }; if (x < y) { x } else { y };"});
+    AST ast = parser.parseProgram();
+
+    assert(ast.size() == 2);
+    assert(parser.getErrors().empty());
+    assert(ast.getStatement(0)->toString() == "if(x<y){x}");
+    assert(ast.getStatement(1)->toString() == "if(x<y){x}else{y}");
+
+    std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
+}
+
 void ParserTest::run() {
   testParsingCorrectLetStatement();
   testParsingInCorrectLetStatement();
@@ -170,4 +184,5 @@ void ParserTest::run() {
   testBinaryOperators();
   testParsingBoolean();
   testGroupedExpressions();
+  testIfExpression();
 }

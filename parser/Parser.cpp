@@ -33,6 +33,9 @@ Parser::Parser(Lexer lexer) : lexer(lexer) {
   this->prefixParser[TokenType::LEFT_PARENTHESES] = [this]() -> IExpression * {
     return this->parseGroupedExpression();
   };
+  this->prefixParser[TokenType::IF] = [this]() -> IExpression * {
+    return this->parseIfExpression();
+  };
   this->infixParsers[TokenType::PLUS] =
       [this](IExpression *leftExpression) -> IExpression * {
     return this->parseBinaryExpression(leftExpression);
@@ -228,8 +231,87 @@ IExpression* Parser::parseGroupedExpression(){
     IExpression* expression = this->parseExpression(Precedence::LOWEST);
     if(this->peekToken.tokenType != TokenType::RIGHT_PARENTHESES){
         this->addError("No Right Parentheses");
+        delete expression;
         return nullptr;
     }
     this->nextToken();
     return expression;
+}
+
+If* Parser::parseIfExpression(){
+    if(this->peekToken.tokenType != TokenType::LEFT_PARENTHESES){
+        this->addError("NO ( for if statement condition");
+        return nullptr;
+    }
+    this->nextToken();
+    IExpression* condition = this->parseExpression(Precedence::LOWEST);
+
+    if(this->currentToken.tokenType != TokenType::RIGHT_PARENTHESES){
+        this->addError("NO ) for if statement condition");
+        delete condition;
+        return nullptr;
+    }
+    this->nextToken();
+    if(this->currentToken.tokenType != TokenType::LEFT_BRACE){
+        this->addError("NO  { for if statement body ");
+        delete condition;
+        return nullptr;
+    }
+    this->nextToken();
+
+    BlockStatement* consequence = this->parseBlock();
+    if(this->currentToken.tokenType != TokenType::RIGHT_BRACE){
+        this->addError("NO  } for if statement body ");
+        delete consequence;
+        delete condition;
+        return nullptr;
+    }
+    If* ifExpression = new If(condition,consequence);
+    this->nextToken();
+
+
+    if(this->currentToken.tokenType != TokenType::ELSE){
+        return ifExpression;
+    }
+    this->nextToken();
+
+    if(this->currentToken.tokenType != TokenType::LEFT_BRACE){
+        this->addError("NO  { for else statement body ");
+        delete consequence;
+        delete condition;
+        delete ifExpression;
+        return nullptr;
+    }
+    this->nextToken();
+    BlockStatement* alternative = parseBlock();
+
+    if(this->currentToken.tokenType != TokenType::RIGHT_BRACE){
+        this->addError("NO  } for else statement body ");
+        delete consequence;
+        delete condition;
+        delete ifExpression;
+        delete alternative;
+        return nullptr;
+    }
+    ifExpression->setAlternative(alternative);
+    this->nextToken();
+    return ifExpression;
+}
+
+BlockStatement* Parser::parseBlock(){
+    BlockStatement* blockStatement = new BlockStatement();
+    blockStatement->setToken(this->currentToken);
+    while (
+        this->currentToken.tokenType != TokenType::RIGHT_BRACE
+        && this->currentToken.tokenType != TokenType::END_OF_FILE
+    ) {
+        IStatement* statement = this->parseStatement();
+        if(statement == nullptr){
+            this->addError("ERRoR in parsing if body\n");
+        } else {
+            blockStatement->addStatement(statement);
+        }
+        this->nextToken();
+    }
+    return blockStatement;
 }
