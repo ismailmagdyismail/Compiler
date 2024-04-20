@@ -100,10 +100,10 @@ void testPrefixOperators() {
   AST ast = parser.parseProgram();
   assert(ast.size() == 4);
   assert(parser.getErrors().empty());
-  assert(ast.getStatement(0)->toString() == "!10");
-  assert(ast.getStatement(1)->toString() == "-10");
-  assert(ast.getStatement(2)->toString() == "-15");
-  assert(ast.getStatement(3)->toString() == "!5");
+  assert(ast.getStatement(0)->toString() == "(!10)");
+  assert(ast.getStatement(1)->toString() == "(-10)");
+  assert(ast.getStatement(2)->toString() == "(-15)");
+  assert(ast.getStatement(3)->toString() == "(!5)");
   std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
 
@@ -111,23 +111,21 @@ void testBinaryOperators() {
   std::cout << ">>> Parser tesing, testing Binary Expression parsing "
                ".....\n";
   Parser parser = Parser({"-a*b;!-a;a+b+c;a*b*c;a*b/c;a+b/c;a+b*c+d/e-f;5 > 4 "
-                          "== 3 < 4;5<4!=3>4; 3 + 4 * 5 == 3 * 1 + 4 * 5;3 + 4 "
-                          "* 5 == 3 * 1 + 4 * 5"});
+                          "== 3 < 4;5<4!=3>4; 3 + 4 * 5 == 3 * 1 + 4 * 5;"});
   AST ast = parser.parseProgram();
 
-  assert(ast.size() == 11);
+  assert(ast.size() == 10);
   assert(parser.getErrors().empty());
-  assert(ast.getStatement(0)->toString() == "-a*b");
-  assert(ast.getStatement(1)->toString() == "!-a");
-  assert(ast.getStatement(2)->toString() == "a+b+c");
-  assert(ast.getStatement(3)->toString() == "a*b*c");
-  assert(ast.getStatement(4)->toString() == "a*b/c");
-  assert(ast.getStatement(5)->toString() == "a+b/c");
-  assert(ast.getStatement(6)->toString() == "a+b*c+d/e-f");
-  assert(ast.getStatement(7)->toString() == "5>4==3<4");
-  assert(ast.getStatement(8)->toString() == "5<4!=3>4");
-  assert(ast.getStatement(9)->toString() == "3+4*5==3*1+4*5");
-  assert(ast.getStatement(10)->toString() == "3+4*5==3*1+4*5");
+  assert(ast.getStatement(0)->toString() == "((-a)*b)");
+  assert(ast.getStatement(1)->toString() == "(!(-a))");
+  assert(ast.getStatement(2)->toString() == "((a+b)+c)");
+  assert(ast.getStatement(3)->toString() == "((a*b)*c)");
+  assert(ast.getStatement(4)->toString() == "((a*b)/c)");
+  assert(ast.getStatement(5)->toString() == "(a+(b/c))");
+  assert(ast.getStatement(6)->toString() == "(((a+(b*c))+(d/e))-f)");
+  assert(ast.getStatement(7)->toString() == "((5>4)==(3<4))");
+  assert(ast.getStatement(8)->toString() == "((5<4)!=(3>4))");
+  assert(ast.getStatement(9)->toString() == "((3+(4*5))==((3*1)+(4*5)))");
 
   std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
@@ -137,15 +135,13 @@ void testParsingBoolean(){
                  ".....\n";
 
     Parser parser = Parser({"true;false;3>5==false;3<5==true;"});
-    //
     AST ast = parser.parseProgram();
-
     assert(ast.size() == 4);
     assert(parser.getErrors().empty());
     assert(ast.getStatement(0)->toString() == "true");
     assert(ast.getStatement(1)->toString() == "false");
-    assert(ast.getStatement(2)->toString() == "3>5==false");
-    assert(ast.getStatement(3)->toString() == "3<5==true");
+    assert(ast.getStatement(2)->toString() == "((3>5)==false)");
+    assert(ast.getStatement(3)->toString() == "((3<5)==true)");
     std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
 

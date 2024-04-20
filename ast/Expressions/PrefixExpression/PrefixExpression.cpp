@@ -20,7 +20,7 @@ void PrefixExpression::setRightExpression(IExpression *rightExpression) {
 }
 
 std::string PrefixExpression::toString() {
-  return this->prefixOperator.literalValue + this->rightExpression->toString();
+  return "("+this->prefixOperator.literalValue + this->rightExpression->toString()+")";
 }
 
 std::string PrefixExpression::getNodeType() { return "PrefixExpressionNode"; }

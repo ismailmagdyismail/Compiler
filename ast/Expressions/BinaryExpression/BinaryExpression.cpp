@@ -38,8 +38,8 @@ std::string BinaryExpression::getValueLiteral() {
 }
 
 std::string BinaryExpression::toString() {
-  return this->leftExpression->toString() + this->binaryOperator.literalValue +
-         this->rightExpression->toString();
+  return "("+this->leftExpression->toString() + this->binaryOperator.literalValue +
+         this->rightExpression->toString()+")";
 }
 
 void BinaryExpression::setBinaryOperator(Token token) {
