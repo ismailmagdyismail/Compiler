@@ -145,6 +145,22 @@ void testParsingBoolean(){
     std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
 
+void testGroupedExpressions(){
+    std::cout << ">>> Parser tesing, testing Grouped Expressions parsing "
+                 ".....\n";
+    Parser parser = Parser({"1+(2+3)+4;(5+5)*2;2/(5+5);-(5+5);!(true==true);"});
+    AST ast = parser.parseProgram();
+    assert(ast.size() == 5);
+    assert(parser.getErrors().empty());
+    assert(ast.getStatement(0)->toString() == "((1+(2+3))+4)");
+    assert(ast.getStatement(1)->toString() == "((5+5)*2)");
+    assert(ast.getStatement(2)->toString() == "(2/(5+5))");
+    assert(ast.getStatement(3)->toString() == "(-(5+5))");
+    assert(ast.getStatement(4)->toString() == "(!(true==true))");
+
+
+    std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
+}
 
 void ParserTest::run() {
   testParsingCorrectLetStatement();
@@ -155,4 +171,5 @@ void ParserTest::run() {
   testPrefixOperators();
   testBinaryOperators();
   testParsingBoolean();
+  testGroupedExpressions();
 }

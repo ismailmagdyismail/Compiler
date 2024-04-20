@@ -38,6 +38,7 @@ private:
   Boolean* parseBoolean();
   PrefixExpression *parsePrefixOperator();
   BinaryExpression *parseBinaryExpression(IExpression *leftExpression);
+  IExpression* parseGroupedExpression();
   Precedence currentPrecedence();
   Precedence peekPrecedence();
   void nextToken();

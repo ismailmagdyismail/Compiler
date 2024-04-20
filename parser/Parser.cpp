@@ -30,6 +30,9 @@ Parser::Parser(Lexer lexer) : lexer(lexer) {
   this->prefixParser[TokenType::MINUS] = [this]() -> IExpression * {
     return this->parsePrefixOperator();
   };
+  this->prefixParser[TokenType::LEFT_PARENTHESES] = [this]() -> IExpression * {
+    return this->parseGroupedExpression();
+  };
   this->infixParsers[TokenType::PLUS] =
       [this](IExpression *leftExpression) -> IExpression * {
     return this->parseBinaryExpression(leftExpression);
@@ -62,6 +65,8 @@ Parser::Parser(Lexer lexer) : lexer(lexer) {
       [this](IExpression *leftExpression) -> IExpression * {
     return this->parseBinaryExpression(leftExpression);
   };
+
+
 }
 
 void Parser::nextToken() {
@@ -157,7 +162,8 @@ StandAloneStatement *Parser::parseStandAloneStatement() {
   StandAloneStatement *standAloneStatement = new StandAloneStatement();
   standAloneStatement->setToken(this->currentToken);
 
-  IExpression *expression = this->parseExpression(LOWEST);
+  //TODO may retur NULL so check for it
+  IExpression *expression = this->parseExpression(Precedence::LOWEST);
   standAloneStatement->setExpression(expression);
 
   return standAloneStatement;
@@ -201,7 +207,7 @@ PrefixExpression *Parser::parsePrefixOperator() {
   PrefixExpression *prefixExpression = new PrefixExpression();
   prefixExpression->setPrefixOperator(this->currentToken);
   this->nextToken();
-  IExpression *rightExpression = this->parseExpression(PREFIX);
+  IExpression *rightExpression = this->parseExpression(Precedence::PREFIX);
   prefixExpression->setRightExpression(rightExpression);
   return prefixExpression;
 }
@@ -215,4 +221,16 @@ BinaryExpression *Parser::parseBinaryExpression(IExpression *leftExpression) {
   IExpression *rightExpression = this->parseExpression(precedence);
   binaryExpression->setRightExpression(rightExpression);
   return binaryExpression;
+}
+
+IExpression* Parser::parseGroupedExpression(){
+    this->nextToken();
+    IExpression* expression = this->parseExpression(Precedence::LOWEST);
+    if(this->peekToken.tokenType != TokenType::RIGHT_PARENTHESES){
+        this->addError("No Right Parentheses");
+        std::cout<<"SHITTTTTTT\n";
+        return nullptr;
+    }
+    this->nextToken();
+    return expression;
 }
