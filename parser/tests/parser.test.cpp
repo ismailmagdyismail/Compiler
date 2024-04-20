@@ -157,8 +157,6 @@ void testGroupedExpressions(){
     assert(ast.getStatement(2)->toString() == "(2/(5+5))");
     assert(ast.getStatement(3)->toString() == "(-(5+5))");
     assert(ast.getStatement(4)->toString() == "(!(true==true))");
-
-
     std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
 
