@@ -132,6 +132,24 @@ void testBinaryOperators() {
   std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
 
+void testParsingBoolean(){
+    std::cout << ">>> Parser tesing, testing Boolean Expression parsing "
+                 ".....\n";
+
+    Parser parser = Parser({"true;false;3>5==false;3<5==true;"});
+    //
+    AST ast = parser.parseProgram();
+
+    assert(ast.size() == 4);
+    assert(parser.getErrors().empty());
+    assert(ast.getStatement(0)->toString() == "true");
+    assert(ast.getStatement(1)->toString() == "false");
+    assert(ast.getStatement(2)->toString() == "3>5==false");
+    assert(ast.getStatement(3)->toString() == "3<5==true");
+    std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
+}
+
+
 void ParserTest::run() {
   testParsingCorrectLetStatement();
   testParsingInCorrectLetStatement();
@@ -140,4 +158,5 @@ void ParserTest::run() {
   testStandAloneRValueIdentifiers();
   testPrefixOperators();
   testBinaryOperators();
+  testParsingBoolean();
 }

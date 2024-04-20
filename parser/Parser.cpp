@@ -21,6 +21,12 @@ Parser::Parser(Lexer lexer) : lexer(lexer) {
   this->prefixParser[TokenType::BANG] = [this]() -> IExpression * {
     return this->parsePrefixOperator();
   };
+  this->prefixParser[TokenType::TRUE] = [this]() -> IExpression * {
+    return this->parseBoolean();
+  };
+  this->prefixParser[TokenType::FALSE] = [this]() -> IExpression * {
+    return this->parseBoolean();
+  };
   this->prefixParser[TokenType::MINUS] = [this]() -> IExpression * {
     return this->parsePrefixOperator();
   };
@@ -184,6 +190,11 @@ IntegerLiteral *Parser::parseIntegerLiteral() {
   IntegerLiteral *integerLiteral =
       new IntegerLiteral(std::stol(this->currentToken.literalValue));
   return integerLiteral;
+}
+
+Boolean* Parser::parseBoolean(){
+    Boolean* boolean = new Boolean(this->currentToken);
+    return boolean;
 }
 
 PrefixExpression *Parser::parsePrefixOperator() {

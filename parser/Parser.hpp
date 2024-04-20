@@ -9,6 +9,7 @@
 #include "../ast/Statements/LetStatment/LetStatement.hpp"
 #include "../ast/Statements/ReturnStatement/ReturnStatement.hpp"
 #include "../ast/Statements/StandAloneStatement/StandAloneStatement.hpp"
+#include "../ast/Expressions/Booleans/Boolean.hpp"
 #include "../ast/programAST/AST.hpp"
 #include "../lexer/lexer.hpp"
 #include "Precedence/Precedence.hpp"
@@ -34,6 +35,7 @@ private:
   StandAloneStatement *parseStandAloneStatement();
   RValueIdentifier *parseRValueIdentifier();
   IntegerLiteral *parseIntegerLiteral();
+  Boolean* parseBoolean();
   PrefixExpression *parsePrefixOperator();
   BinaryExpression *parseBinaryExpression(IExpression *leftExpression);
   Precedence currentPrecedence();
