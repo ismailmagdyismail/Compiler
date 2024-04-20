@@ -228,7 +228,6 @@ IExpression* Parser::parseGroupedExpression(){
     IExpression* expression = this->parseExpression(Precedence::LOWEST);
     if(this->peekToken.tokenType != TokenType::RIGHT_PARENTHESES){
         this->addError("No Right Parentheses");
-        std::cout<<"SHITTTTTTT\n";
         return nullptr;
     }
     this->nextToken();
