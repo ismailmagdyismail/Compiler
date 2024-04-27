@@ -161,7 +161,7 @@ void testGroupedExpressions(){
 }
 
 void testIfExpression(){
-    std::cout << ">>> Parser tesing, testing Grouped Expressions parsing "
+    std::cout << ">>> Parser tesing, testing If Expressions parsing "
                  ".....\n";
     Parser parser = Parser({"if (x < y) { x }; if (x < y) { x } else { y };"});
     AST ast = parser.parseProgram();
@@ -174,6 +174,18 @@ void testIfExpression(){
     std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
 
+void testFunctions(){
+    std::cout << ">>> Parser tesing, testing functions parsing "
+                 ".....\n";
+    Parser parser = Parser({"fn(x, y) { x + y};fn(){};fn(x) {};fn(x, y, z) {};"});
+    AST ast = parser.parseProgram();
+    assert(ast.size()==4);
+    assert(ast.getStatement(0)->toString() == "fn(x,y){(x+y)}");
+    assert(ast.getStatement(1)->toString() == "fn(){}");
+    assert(ast.getStatement(2)->toString() == "fn(x){}");
+    assert(ast.getStatement(3)->toString() == "fn(x,y,z){}");
+    std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
+}
 void ParserTest::run() {
   testParsingCorrectLetStatement();
   testParsingInCorrectLetStatement();
@@ -185,4 +197,5 @@ void ParserTest::run() {
   testParsingBoolean();
   testGroupedExpressions();
   testIfExpression();
+  testFunctions();
 }

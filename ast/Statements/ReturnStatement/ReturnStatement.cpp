@@ -31,6 +31,10 @@ std::string ReturnStatement::toString() {
          this->value->toString();
 }
 
+ReturnStatement* ReturnStatement::getCopy() {
+  return new ReturnStatement(*this);
+}
+
 IStatement *ReturnStatement::clone() {
   return new ReturnStatement(this->value->clone());
 }

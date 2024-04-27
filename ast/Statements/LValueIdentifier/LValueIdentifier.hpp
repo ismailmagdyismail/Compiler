@@ -13,6 +13,7 @@ public:
   virtual std::string getNodeType() override;
   virtual std::string toString() override;
   virtual IStatement *clone() override;
+  LValueIdentifier* getCopy();
   virtual ~LValueIdentifier();
 
 private:

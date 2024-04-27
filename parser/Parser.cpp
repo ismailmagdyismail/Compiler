@@ -36,6 +36,9 @@ Parser::Parser(Lexer lexer) : lexer(lexer) {
   this->prefixParser[TokenType::IF] = [this]() -> IExpression * {
     return this->parseIfExpression();
   };
+  this->prefixParser[TokenType::FUNCTION] = [this]() -> IExpression * {
+    return this->parseFunctionLiteral();
+  };
   this->infixParsers[TokenType::PLUS] =
       [this](IExpression *leftExpression) -> IExpression * {
     return this->parseBinaryExpression(leftExpression);
@@ -68,8 +71,6 @@ Parser::Parser(Lexer lexer) : lexer(lexer) {
       [this](IExpression *leftExpression) -> IExpression * {
     return this->parseBinaryExpression(leftExpression);
   };
-
-
 }
 
 void Parser::nextToken() {
@@ -296,6 +297,52 @@ If* Parser::parseIfExpression(){
     ifExpression->setAlternative(alternative);
     this->nextToken();
     return ifExpression;
+}
+
+
+void freeCollection(std::vector<LValueIdentifier*>&collection){
+    for(auto& element:collection){
+        delete element;
+    }
+}
+
+FunctionLiteral* Parser::parseFunctionLiteral(){
+    Token functionToken = this->currentToken;
+    this->nextToken();
+    if(this->currentToken.tokenType != TokenType::LEFT_PARENTHESES){
+        return nullptr;
+    }
+    this->nextToken();
+    std::vector<LValueIdentifier*> args = this->parseArguments();
+    if(this->currentToken.tokenType != TokenType::RIGHT_PARENTHESES){
+        freeCollection(args);
+        return nullptr;
+    }
+    this->nextToken();
+    if(this->currentToken.tokenType!= TokenType::LEFT_BRACE){
+        freeCollection(args);
+        return nullptr;
+    }
+    this->nextToken();
+    BlockStatement* functionBlock = this->parseBlock();
+    if(this->currentToken.tokenType != TokenType::RIGHT_BRACE){
+        freeCollection(args);
+        delete functionBlock;
+        return nullptr;
+    }
+    FunctionLiteral* functionLiteral = new FunctionLiteral(functionToken,functionBlock,args);
+    return functionLiteral;
+}
+
+std::vector<LValueIdentifier*> Parser::parseArguments(){
+    std::vector<LValueIdentifier*>arguments;
+    while (this->currentToken.tokenType != TokenType::RIGHT_PARENTHESES) {
+        if(this->currentToken.tokenType != TokenType::COMMA){
+            arguments.push_back(new LValueIdentifier(this->currentToken));
+        }
+        this->nextToken();
+    }
+    return arguments;
 }
 
 BlockStatement* Parser::parseBlock(){
