@@ -6,6 +6,7 @@ FunctionLiteral::FunctionLiteral(Token token,BlockStatement* blockStatement,std:
     this->token = token;
     this->blockStatements = blockStatement;
     this->arguments = args;
+    //
 }
 
 FunctionLiteral::FunctionLiteral(const FunctionLiteral& other){
