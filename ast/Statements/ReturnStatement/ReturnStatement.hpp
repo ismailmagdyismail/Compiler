@@ -15,6 +15,8 @@ public:
   virtual std::string getTokenLiteral() override;
   virtual std::string getNodeType() override;
   virtual std::string toString() override;
+  ReturnStatement* getCopy();
+
   std::string getReturnedValue();
   std::string getValueLiteral();
 

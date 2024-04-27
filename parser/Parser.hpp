@@ -12,6 +12,7 @@
 #include "../ast/Expressions/Booleans/Boolean.hpp"
 #include "../ast/Expressions/If/If.hpp"
 #include "../ast/programAST/AST.hpp"
+#include "../ast/Expressions/Functions/FunctionLiteral.hpp"
 #include "../lexer/lexer.hpp"
 #include "Precedence/Precedence.hpp"
 #include <functional>
@@ -41,6 +42,8 @@ private:
   BlockStatement* parseBlock();
   PrefixExpression *parsePrefixOperator();
   BinaryExpression *parseBinaryExpression(IExpression *leftExpression);
+  FunctionLiteral* parseFunctionLiteral();
+  std::vector<LValueIdentifier*> parseArguments();
   IExpression* parseGroupedExpression();
   Precedence currentPrecedence();
   Precedence peekPrecedence();

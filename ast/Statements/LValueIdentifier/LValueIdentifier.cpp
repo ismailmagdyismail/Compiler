@@ -12,6 +12,10 @@ LValueIdentifier &LValueIdentifier::operator=(const LValueIdentifier &other) {
   return *this;
 }
 
+LValueIdentifier* LValueIdentifier::getCopy(){
+    return new LValueIdentifier(*this);
+}
+
 std::string LValueIdentifier::getTokenLiteral() {
   return this->token.literalValue;
 }
