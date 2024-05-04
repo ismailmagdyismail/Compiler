@@ -5,6 +5,7 @@ std::map<TokenType, Precedence> tokensPrecedence = {
     {TokenType::ASTERISK, PRODUCT}, {TokenType::SLASH, PRODUCT},
     {TokenType::LT, LESS_GREATER},  {TokenType::GT, LESS_GREATER},
     {TokenType::EQUAL, EQUALS},     {TokenType::NOT_EQUAL, NOT_EQUAL},
+    {TokenType::LEFT_PARENTHESES,CALL}
 };
 
 Precedence TokensPrecedence::getTokenPrecedence(TokenType token) {

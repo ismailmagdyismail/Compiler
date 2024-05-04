@@ -39,6 +39,9 @@ Parser::Parser(Lexer lexer) : lexer(lexer) {
   this->prefixParser[TokenType::FUNCTION] = [this]() -> IExpression * {
     return this->parseFunctionLiteral();
   };
+  this->infixParsers[TokenType::LEFT_PARENTHESES] =[this](IExpression *leftExpression) -> IExpression * {
+    return this->parseFunctionCallExpression(leftExpression);
+  };
   this->infixParsers[TokenType::PLUS] =
       [this](IExpression *leftExpression) -> IExpression * {
     return this->parseBinaryExpression(leftExpression);
@@ -185,7 +188,10 @@ IExpression *Parser::parseExpression(Precedence precedence) {
          precedence < this->peekPrecedence()) {
     auto infixParser = this->infixParsers[this->peekToken.tokenType];
     this->nextToken();
-    expression = infixParser(expression);
+    IExpression* infixExpression = infixParser(expression);
+    if(infixExpression != nullptr){
+        expression = infixExpression;
+    }
   }
   return expression;
 }
@@ -300,8 +306,10 @@ If* Parser::parseIfExpression(){
 }
 
 
-void freeCollection(std::vector<LValueIdentifier*>&collection){
-    for(auto& element:collection){
+
+template<typename T>
+void freeCollection(std::vector<T*>& collection){
+    for(auto& element : collection){
         delete element;
     }
 }
@@ -313,7 +321,7 @@ FunctionLiteral* Parser::parseFunctionLiteral(){
         return nullptr;
     }
     this->nextToken();
-    std::vector<LValueIdentifier*> args = this->parseArguments();
+    std::vector<LValueIdentifier*> args = this->parseParameters();
     if(this->currentToken.tokenType != TokenType::RIGHT_PARENTHESES){
         freeCollection(args);
         return nullptr;
@@ -334,15 +342,15 @@ FunctionLiteral* Parser::parseFunctionLiteral(){
     return functionLiteral;
 }
 
-std::vector<LValueIdentifier*> Parser::parseArguments(){
-    std::vector<LValueIdentifier*>arguments;
+std::vector<LValueIdentifier*> Parser::parseParameters(){
+    std::vector<LValueIdentifier*>parameters;
     while (this->currentToken.tokenType != TokenType::RIGHT_PARENTHESES) {
         if(this->currentToken.tokenType != TokenType::COMMA){
-            arguments.push_back(new LValueIdentifier(this->currentToken));
+            parameters.push_back(new LValueIdentifier(this->currentToken));
         }
         this->nextToken();
     }
-    return arguments;
+    return parameters;
 }
 
 BlockStatement* Parser::parseBlock(){
@@ -361,4 +369,27 @@ BlockStatement* Parser::parseBlock(){
         this->nextToken();
     }
     return blockStatement;
+}
+
+
+FunctionCall* Parser::parseFunctionCallExpression(IExpression *leftExpression){
+    std::vector<IExpression*>args = this->parseCallArguments();
+    if(this->currentToken.tokenType != TokenType::RIGHT_PARENTHESES){
+        freeCollection(args);
+        return nullptr;
+    }
+    return new FunctionCall(TokenActions::createToken(TokenType::FUNCTION),leftExpression,args);
+}
+
+std::vector<IExpression*>Parser::parseCallArguments(){
+    this->nextToken();
+    std::vector<IExpression*> args ;
+    while (this->currentToken.tokenType != TokenType::RIGHT_PARENTHESES
+            && this->currentToken.tokenType != TokenType::END_OF_FILE) {
+        if(this->currentToken.tokenType != TokenType::COMMA){
+            args.push_back(this->parseExpression(Precedence::LOWEST));
+        }
+        this->nextToken();
+    }
+    return args;
 }

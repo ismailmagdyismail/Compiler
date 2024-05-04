@@ -174,7 +174,7 @@ void testIfExpression(){
     std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
 
-void testFunctions(){
+void testFunctionsLiterals(){
     std::cout << ">>> Parser tesing, testing functions parsing "
                  ".....\n";
     Parser parser = Parser({"fn(x, y) { x + y};fn(){};fn(x) {};fn(x, y, z) {};"});
@@ -184,6 +184,20 @@ void testFunctions(){
     assert(ast.getStatement(1)->toString() == "fn(){}");
     assert(ast.getStatement(2)->toString() == "fn(x){}");
     assert(ast.getStatement(3)->toString() == "fn(x,y,z){}");
+    std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
+}
+
+
+void testFunctionsCalls(){
+    std::cout << ">>> Parser tesing, testing functions calls "
+                 ".....\n";
+    Parser parser = Parser({"a + add(b * c) + d;add(a, b, 1, 2 * 3, 4 + 5, add(6, 7 * 8));add(a + b + c * d / f + g)"});
+    AST ast = parser.parseProgram();
+
+    assert(ast.size()==3);
+    assert(ast.getStatement(0)->toString() == "((a+add((b*c)))+d)");
+    assert(ast.getStatement(1)->toString() == "add(a,b,1,(2*3),(4+5),add(6,(7*8)))");
+    assert(ast.getStatement(2)->toString() == "add((((a+b)+((c*d)/f))+g))");
     std::cout << ">>> Parser testing done sucessfully , test passed ...\n";
 }
 void ParserTest::run() {
@@ -197,5 +211,6 @@ void ParserTest::run() {
   testParsingBoolean();
   testGroupedExpressions();
   testIfExpression();
-  testFunctions();
+  testFunctionsLiterals();
+  testFunctionsCalls();
 }

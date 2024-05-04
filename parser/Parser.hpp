@@ -11,6 +11,7 @@
 #include "../ast/Statements/StandAloneStatement/StandAloneStatement.hpp"
 #include "../ast/Expressions/Booleans/Boolean.hpp"
 #include "../ast/Expressions/If/If.hpp"
+#include "../ast/Expressions/FunctionCall/FunctionCall.hpp"
 #include "../ast/programAST/AST.hpp"
 #include "../ast/Expressions/Functions/FunctionLiteral.hpp"
 #include "../lexer/lexer.hpp"
@@ -43,12 +44,16 @@ private:
   PrefixExpression *parsePrefixOperator();
   BinaryExpression *parseBinaryExpression(IExpression *leftExpression);
   FunctionLiteral* parseFunctionLiteral();
-  std::vector<LValueIdentifier*> parseArguments();
+  std::vector<LValueIdentifier*> parseParameters();
   IExpression* parseGroupedExpression();
+  FunctionCall* parseFunctionCallExpression(IExpression *leftExpression);
+  std::vector<IExpression*>parseCallArguments();
+
   Precedence currentPrecedence();
   Precedence peekPrecedence();
   void nextToken();
   void addError(std::string errorMessage);
+
   std::vector<std::string> errors;
   Lexer lexer;
   Token currentToken;
