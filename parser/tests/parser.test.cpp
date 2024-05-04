@@ -11,9 +11,9 @@ void testParsingCorrectLetStatement() {
   std::cout
       << ">>> Parser tesing, testing Correct LET Statment parsing .....\n";
   Parser parser =
-      Parser({"let x = 10; let y =10; let z = x;let foobar = 838383;"});
+      Parser({"let x = 10; let y =10; let z = x;let foobar = 838383;let x=true"});
   AST ast = parser.parseProgram();
-  assert(ast.size() == 4);
+  assert(ast.size() == 5);
   assert(ast.getStatement(0)->getTokenLiteral() == "let");
   assert(ast.getStatement(0)->toString() == "let x = 10");
   assert(ast.getStatement(1)->getTokenLiteral() == "let");
@@ -22,6 +22,8 @@ void testParsingCorrectLetStatement() {
   assert(ast.getStatement(2)->toString() == "let z = x");
   assert(ast.getStatement(3)->getTokenLiteral() == "let");
   assert(ast.getStatement(3)->toString() == "let foobar = 838383");
+  assert(ast.getStatement(4)->toString() == "let x = true");
+
 
   assert(parser.getErrors().empty());
   std::cout << ">>> Parser testing done sucessfully , test passed ...\n";

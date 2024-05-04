@@ -122,7 +122,6 @@ IStatement *Parser::parseStatement() {
 }
 
 LetStatement *Parser::parseLetStatement() {
-  // TODO add parsing expression later , when
   if (this->peekToken.tokenType != TokenType::IDENTIFIER) {
     this->addError("Invalid Identifier");
     return nullptr;
@@ -137,32 +136,22 @@ LetStatement *Parser::parseLetStatement() {
     return nullptr;
   }
   this->nextToken();
-
-  if (this->peekToken.tokenType != TokenType::INT &&
-      this->peekToken.tokenType != TokenType::IDENTIFIER) {
-    // TODO parse RValue expression
-    this->addError("Invalid RValue");
-    return nullptr;
-  }
   this->nextToken();
-  Token rValueToken = this->currentToken;
   LValueIdentifier lValueIdentifier = LValueIdentifier(identifierToken);
-  IExpression *expression =
-      new RValueIdentifier(rValueToken, rValueToken.literalValue);
-  return new LetStatement(lValueIdentifier, expression);
+  IExpression* rhs = this->parseExpression(Precedence::LOWEST);
+  if(this->currentToken.tokenType == TokenType::SEMI_COLON){
+      this->nextToken();
+  }
+  return new LetStatement(lValueIdentifier, rhs);
 }
 
 ReturnStatement *Parser::parseReturnStatement() {
-  // TODO parse Return expression
-  if (this->peekToken.tokenType != TokenType::IDENTIFIER &&
-      this->peekToken.tokenType != TokenType::INT) {
-    this->addError("Invalid return value ");
-    return nullptr;
-  }
   this->nextToken();
-  Token returnToken = this->currentToken;
-  return new ReturnStatement(
-      new RValueIdentifier(returnToken, returnToken.literalValue));
+  IExpression* returnValue = this->parseExpression(Precedence::LOWEST);
+  if(this->currentToken.tokenType == TokenType::SEMI_COLON){
+      this->nextToken();
+  }
+  return new ReturnStatement(returnValue);
 }
 
 StandAloneStatement *Parser::parseStandAloneStatement() {
