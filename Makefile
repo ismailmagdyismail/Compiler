@@ -1,6 +1,6 @@
 CXX := clang++
 CXXFLAGS := -std=gnu++20
-BUILD_DIR := .
+BUILD_DIR := ./build
 
 SRCS := $(shell find . -name '*.cpp')
 OBJS := $(SRCS:%.cpp=$(BUILD_DIR)/%.o)
