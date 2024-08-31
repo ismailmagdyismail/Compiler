@@ -6,6 +6,6 @@
 int main() {
   TokenTest::run();
   LexerTest::run();
-  AstTest::run();
   ParserTest::run();
+  AstTest::run();
 }

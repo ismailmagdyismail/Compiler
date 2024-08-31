@@ -1,4 +1,6 @@
 #include "./AST.hpp"
+#include "../../ObjectSystem/NilValue/NilValue.hpp"
+
 #include <exception>
 #include <iostream>
 
@@ -29,6 +31,15 @@ IStatement *AST::getStatement(int i) {
 }
 
 unsigned int AST::size() { return this->statements.size(); }
+
+IObject* AST::eval(){
+    IObject* result = new NilValue();
+    for(auto& statement : this->statements){
+        delete result ;
+        result = statement->objectValue();
+    }
+    return result;
+}
 
 AST::~AST() {
   for (auto &statement : this->statements) {

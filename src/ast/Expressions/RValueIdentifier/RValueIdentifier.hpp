@@ -17,6 +17,7 @@ public:
   virtual std::string getNodeType() override;
   virtual std::string getValueLiteral() override;
   virtual std::string toString() override;
+  virtual IObject* objectValue() override;
   virtual IExpression *clone() override;
   virtual ~RValueIdentifier();
 

@@ -1,4 +1,6 @@
 #include "./LetStatement.hpp"
+#include "../../../ObjectSystem/NilValue/NilValue.hpp"
+
 
 LetStatement::LetStatement(const LetStatement &other)
     : identifier(other.identifier) {
@@ -36,6 +38,10 @@ std::string LetStatement::toString() {
          this->identifier.toString() + " " +
          TokenActions::getTokenLiteralValue(TokenType::ASSIGN) + " " +
          this->value->toString();
+}
+
+IObject* LetStatement::objectValue(){
+    return new NilValue();
 }
 
 IStatement *LetStatement::clone() {

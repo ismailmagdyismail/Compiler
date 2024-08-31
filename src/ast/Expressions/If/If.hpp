@@ -16,6 +16,7 @@ public:
     std::string getTokenLiteral() override;
     std::string getNodeType() override;
     std::string getValueLiteral() override;
+    IObject* objectValue() override;
     virtual IExpression* clone() override;
     virtual ~If();
 private:

@@ -1,4 +1,5 @@
 #include "./FunctionCall.hpp"
+#include "../../../ObjectSystem/NilValue/NilValue.hpp"
 #include <vector>
 
 FunctionCall::FunctionCall(Token token,IExpression* function , std::vector<IExpression*> arguments){
@@ -37,6 +38,11 @@ std::string FunctionCall::toString(){
     }
     functionCallString += ")";
     return functionCallString;
+}
+
+
+IObject* FunctionCall::objectValue(){
+    return new NilValue();
 }
 
 IExpression* FunctionCall::clone(){

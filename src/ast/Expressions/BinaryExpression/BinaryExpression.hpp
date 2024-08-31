@@ -16,6 +16,7 @@ public:
   virtual std::string getNodeType() override;
   virtual std::string getTokenLiteral() override;
   virtual std::string getValueLiteral() override;
+  virtual IObject* objectValue() override;
   void setLeftExpression(IExpression *leftExpression);
   void setRightExpression(IExpression *rightExpression);
   void setBinaryOperator(Token token);

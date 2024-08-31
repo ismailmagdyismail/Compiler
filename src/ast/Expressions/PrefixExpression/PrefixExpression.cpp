@@ -1,4 +1,5 @@
 #include "./PrefixExpression.hpp"
+#include "../../../ObjectSystem/NilValue/NilValue.hpp"
 
 PrefixExpression::PrefixExpression(Token prefixOperator,
                                    IExpression *rightExpression) {
@@ -31,6 +32,10 @@ std::string PrefixExpression::getTokenLiteral() {
 
 std::string PrefixExpression::getValueLiteral() {
   return this->rightExpression->getValueLiteral();
+}
+
+IObject* PrefixExpression::objectValue(){
+    return new NilValue();
 }
 
 IExpression *PrefixExpression::clone() { return new PrefixExpression(*this); }

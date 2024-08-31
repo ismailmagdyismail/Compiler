@@ -9,5 +9,5 @@ public:
     std::string value() override;
     ObjectValues type() override;
 private:
-    int intValue;
+    long long intValue;
 };

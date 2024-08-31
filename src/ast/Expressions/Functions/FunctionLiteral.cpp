@@ -1,4 +1,6 @@
 #include "./FunctionLiteral.hpp"
+#include "../../../ObjectSystem/NilValue/NilValue.hpp"
+
 #include <iostream>
 #include <vector>
 
@@ -41,6 +43,10 @@ std::string FunctionLiteral::getTokenLiteral(){
 
 std::string FunctionLiteral::getValueLiteral(){
     return this->token.literalValue;
+}
+
+IObject* FunctionLiteral::objectValue(){
+    return new NilValue();
 }
 
 IExpression* FunctionLiteral::clone(){

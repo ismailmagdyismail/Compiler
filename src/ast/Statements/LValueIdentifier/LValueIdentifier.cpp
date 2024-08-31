@@ -1,4 +1,6 @@
 #include "./LValueIdentifier.hpp"
+#include "../../../ObjectSystem/NilValue/NilValue.hpp"
+
 #include <iostream>
 
 LValueIdentifier::LValueIdentifier(const LValueIdentifier &other) {
@@ -23,6 +25,10 @@ std::string LValueIdentifier::getTokenLiteral() {
 std::string LValueIdentifier::getNodeType() { return "IdentifierNode"; }
 
 std::string LValueIdentifier::toString() { return this->getTokenLiteral(); }
+
+IObject* LValueIdentifier::objectValue(){
+    return new NilValue();
+}
 
 IStatement *LValueIdentifier::clone() {
   return new LValueIdentifier(this->token);

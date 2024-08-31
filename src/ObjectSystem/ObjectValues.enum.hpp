@@ -1,6 +1,6 @@
 # pragma once
 
-enum class ObjectValues{
+enum ObjectValues{
     NIL,
     INTEGER,
     BOOLEAN,

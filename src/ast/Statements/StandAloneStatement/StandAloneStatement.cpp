@@ -10,8 +10,7 @@ StandAloneStatement::StandAloneStatement(const StandAloneStatement &other) {
   this->expression = other.expression->clone();
 }
 
-StandAloneStatement &
-StandAloneStatement::operator=(const StandAloneStatement &other) {
+StandAloneStatement & StandAloneStatement::operator=(const StandAloneStatement &other) {
   this->expression = other.expression->clone();
   this->token = other.token;
   return *this;
@@ -37,6 +36,10 @@ std::string StandAloneStatement::getExpressionValue() {
 
 std::string StandAloneStatement::toString() {
   return this->expression->toString();
+}
+
+IObject* StandAloneStatement::objectValue(){
+    return expression->objectValue();
 }
 
 IStatement *StandAloneStatement::clone() {

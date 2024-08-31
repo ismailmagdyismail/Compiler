@@ -1,4 +1,5 @@
 #include "./If.hpp"
+#include "../../../ObjectSystem/NilValue/NilValue.hpp"
 #include <iostream>
 
 If::If(IExpression* condition ,BlockStatement* consequence){
@@ -41,6 +42,10 @@ std::string If::getTokenLiteral(){
 
 std::string If::getValueLiteral(){
     return this->toString();
+}
+
+IObject* If::objectValue(){
+    return new NilValue();
 }
 
 IExpression* If::clone(){

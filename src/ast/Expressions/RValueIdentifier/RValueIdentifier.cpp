@@ -1,4 +1,5 @@
 #include "./RValueIdentifier.hpp"
+#include "../../../ObjectSystem/NilValue/NilValue.hpp"
 
 RValueIdentifier::RValueIdentifier(const RValueIdentifier &other) {
   this->value = other.value;
@@ -25,6 +26,10 @@ std::string RValueIdentifier::getNodeType() { return "IdentifierNode"; }
 std::string RValueIdentifier::getValueLiteral() { return this->value; }
 
 std::string RValueIdentifier::toString() { return this->getValueLiteral(); }
+
+IObject* RValueIdentifier::objectValue(){
+    return new NilValue();
+}
 
 IExpression *RValueIdentifier::clone() {
   return new RValueIdentifier(this->token, this->value);

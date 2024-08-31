@@ -1,4 +1,6 @@
 #include "./BinaryExpression.hpp"
+#include "../../../ObjectSystem/NilValue/NilValue.hpp"
+
 #include <iostream>
 
 BinaryExpression::BinaryExpression() {
@@ -52,6 +54,10 @@ void BinaryExpression::setLeftExpression(IExpression *leftExpression) {
 
 void BinaryExpression::setRightExpression(IExpression *rightExpression) {
   this->rightExpression = rightExpression;
+}
+
+IObject* BinaryExpression::objectValue(){
+    return new NilValue();
 }
 
 IExpression *BinaryExpression::clone() { return new BinaryExpression(*this); }

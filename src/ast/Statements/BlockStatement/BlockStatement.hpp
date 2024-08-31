@@ -14,6 +14,7 @@ public:
     virtual std::string toString() override;
     virtual std::string getTokenLiteral() override;
     virtual std::string getNodeType() override;
+    virtual IObject* objectValue() override;
     virtual IStatement* clone() override;
     BlockStatement* getCopy();
     virtual ~BlockStatement();

@@ -1,4 +1,5 @@
 #include "./ReturnStatement.hpp"
+#include "../../../ObjectSystem/NilValue/NilValue.hpp"
 
 ReturnStatement::ReturnStatement(IExpression *value) {
   this->token = TokenActions::createToken(TokenType::RETURN);
@@ -29,6 +30,10 @@ std::string ReturnStatement::getReturnedValue() {
 std::string ReturnStatement::toString() {
   return TokenActions::getTokenLiteralValue(TokenType::RETURN) + " " +
          this->value->toString();
+}
+
+IObject* ReturnStatement::objectValue(){
+    return new NilValue();
 }
 
 ReturnStatement* ReturnStatement::getCopy() {

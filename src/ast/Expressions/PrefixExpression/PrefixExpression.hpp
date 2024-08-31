@@ -15,6 +15,7 @@ public:
   virtual std::string getNodeType() override;
   virtual std::string getTokenLiteral() override;
   virtual std::string getValueLiteral() override;
+  virtual IObject* objectValue() override;
 
   void setPrefixOperator(Token prefixOperator);
   void setRightExpression(IExpression *rightExpression);

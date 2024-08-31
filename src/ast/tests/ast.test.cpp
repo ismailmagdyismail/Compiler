@@ -1,4 +1,5 @@
 #include "./ast.test.hpp"
+#include "../../parser/Parser.hpp"
 #include "../Expressions/IExpression.hpp"
 #include "../Expressions/RValueIdentifier/RValueIdentifier.hpp"
 #include "../Statements/IStatement.hpp"
@@ -7,6 +8,7 @@
 #include "../Statements/StandAloneStatement/StandAloneStatement.hpp"
 #include <cassert>
 #include <iostream>
+#include <vector>
 
 void testRValueIdentifier() {
   std::cout << "Testing RValueIdentifiers ....\n";
@@ -51,10 +53,34 @@ void testExpressionStatement() {
   std::cout << "Done Testing StandAloneStatements sucessfully ....\n";
 }
 
+void testEval(){
+    std::cout << "Testing EVAL ....\n";
+    struct TestStructure{
+        Parser parser;
+    };
+    std::vector<TestStructure> tests;
+    TestStructure t1 = {
+        .parser = Parser({"5"}),
+    };
+    TestStructure t2 = {
+        .parser = Parser({"true;false"}),
+    };
+    tests.push_back(t1);
+    tests.push_back(t2);
+    for(auto i : tests){
+        AST ast = i.parser.parseProgram();
+        IObject* objectValue = ast.eval();
+        std::cout<<objectValue->value() <<" "<<objectValue->type()<<'\n';
+        delete objectValue;
+    }
+    std::cout << "Done EVAL sucessfully ....\n";
+}
+
 void AstTest::run() {
   testLetStatement();
   testLValueIdentifier();
   testStandAloneStatement();
   testRValueIdentifier();
   testExpressionStatement();
+  testEval();
 }

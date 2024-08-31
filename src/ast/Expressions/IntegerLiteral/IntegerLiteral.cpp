@@ -1,4 +1,5 @@
 #include "./IntegerLiteral.hpp"
+#include "../../../ObjectSystem/IntegerValue/IntegerValue.hpp"
 #include <string>
 
 IntegerLiteral::IntegerLiteral(long long value) {
@@ -20,6 +21,10 @@ std::string IntegerLiteral::getTokenLiteral() {
 
 std::string IntegerLiteral::getValueLiteral() {
   return std::to_string(this->value);
+}
+
+IObject* IntegerLiteral::objectValue(){
+    return new IntegerValue(value);
 }
 
 std::string IntegerLiteral::toString() { return this->getValueLiteral(); }

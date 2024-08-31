@@ -12,6 +12,7 @@ public:
      virtual std::string getValueLiteral() override;
      virtual std::string getNodeType() override;
      virtual std::string getTokenLiteral() override;
+     virtual IObject* objectValue() override;
      virtual IExpression* clone() override;
 
 private:

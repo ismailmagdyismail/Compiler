@@ -11,12 +11,13 @@
 class FunctionLiteral:public IExpression{
 public:
     FunctionLiteral(Token token,BlockStatement* blockStatements,std::vector<LValueIdentifier*>args) ;
-    FunctionLiteral(const FunctionLiteral& other);;
-    virtual std::string getNodeType()override;
-    virtual std::string getTokenLiteral()override;
-    virtual std::string getValueLiteral()override;
-    virtual std::string toString()override;
-    virtual IExpression* clone()override;
+    FunctionLiteral(const FunctionLiteral& other);
+    virtual std::string getNodeType() override;
+    virtual std::string getTokenLiteral() override;
+    virtual std::string getValueLiteral() override;
+    virtual std::string toString() override;
+    virtual IObject* objectValue() override;
+    virtual IExpression* clone() override;
     virtual ~FunctionLiteral();
 private:
     Token token;

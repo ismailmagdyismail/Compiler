@@ -1,5 +1,6 @@
 #include "./BlockStatement.hpp"
-#include <cstddef>
+#include "../../../ObjectSystem/NilValue/NilValue.hpp"
+
 #include <iostream>
 
 BlockStatement::BlockStatement(const BlockStatement& other){
@@ -31,6 +32,10 @@ std::string BlockStatement::getNodeType(){
 
 std::string BlockStatement::getTokenLiteral(){
     return this->token.literalValue;
+}
+
+IObject* BlockStatement::objectValue(){
+    return new NilValue();
 }
 
 IStatement* BlockStatement::clone(){

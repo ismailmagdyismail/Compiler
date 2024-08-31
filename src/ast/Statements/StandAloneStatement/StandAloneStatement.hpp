@@ -16,6 +16,7 @@ public:
   virtual std::string getNodeType() override;
   virtual std::string getExpressionValue();
   virtual std::string toString() override;
+  virtual IObject* objectValue() override;
   virtual IStatement *clone() override;
   void setToken(Token token);
   void setExpression(IExpression *expression);
